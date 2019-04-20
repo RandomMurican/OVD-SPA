@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupService } from '../_services/group.service';
 import { Router } from '@angular/router';
+import { CloudService } from '../_services/cloud.service';
+import { Group } from '../_models/group';
 
 @Component({
   selector: 'app-new-group',
@@ -8,34 +10,43 @@ import { Router } from '@angular/router';
   styleUrls: ['./new-group.component.css']
 })
 export class NewGroupComponent implements OnInit {
-  model: any = {};
+  model: Group;
+  protocols: string[] = [];
+  templates: string[] = [];
+  services: string[] = [];
 
-  constructor(public groupService: GroupService, private router: Router) { }
+
+  constructor(public groupService: GroupService, private router: Router, private cloudService: CloudService) { }
 
   ngOnInit() {
+    this.cloudService.getProtocols().subscribe((protocols: string[]) => {
+      this.protocols = protocols;
+    }, error => {
+      console.log(error);
+      this.protocols = ['ssh', 'rdp'];
+    });
+    this.cloudService.getServiceOfferings().subscribe((services: string[]) => {
+      this.services = services;
+    }, error => {
+      console.log(error);
+      this.services = ['Option 1', 'Option 2', 'Option 3'];
+    });
+    this.cloudService.getTemplates().subscribe((templates: string[]) => {
+      this.templates = templates;
+    }, error => {
+      console.log(error);
+      this.templates = ['Option 1', 'Option 2', 'Option 3'];
+    });
   }
 
   create() {
-    if (this.groupService.create(this.model)) {
-      this.clearForm();
-      this.router.navigate(['/groups']);
-    } else {
-      console.log('error creating group');
-    }
+
   }
 
   // Clears the entire form and backs the user out of the page
   clearForm() {
     console.log('clearing form');
-    this.model.group_name = '';
-    this.model.total_vm = '';
-    this.model.hotspares = '';
-    this.model.image = '';
-    this.model.dawgtag = '';
+    this.model.name = '';
+    this.model.template = '';
   }
-
-  getImages() {
-     return this.groupService.getImages();
-  }
-
 }

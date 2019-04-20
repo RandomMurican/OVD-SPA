@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Group } from '../_models/group';
-import { map, groupBy } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

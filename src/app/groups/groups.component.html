@@ -1,0 +1,69 @@
+<!--
+  <div class="alert alert-danger alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Error!</strong> Andy wrote a bad script and the group wasn't deleted as a result.
+</div> 
+-->
+<div class="container mt-4">
+  <button type="button" class="btn btn-success btn-md ml-auto" [routerLink]="['/new-group']">Create</button>
+</div>
+
+<div class="container h-100 mt-2">
+  <div class="h-100 justify-content-center">
+    <div class="row py-1 bg-dark text-light">
+      <div class="col-md-1 col-sm-2 col-7 my-auto text-left">
+        <span class="button" (click)="sort(0)">ID</span>
+      </div>
+      <div class="col-md-5 col-sm-3 col-7 my-auto text-left">
+        <span class="button" (click)="sort(1)">Name</span>
+      </div>
+      <div class="col-md-1 d-none d-md-block col-0 my-auto text-left">
+        <span class="button" (click)="sort(2)">VMs</span>
+      </div>
+      <div class="col-md-1 d-none d-md-block col-0 my-auto text-center">
+        <span class="button" (click)="sort(3)">Active</span>
+      </div>
+      <div class="col-md-1 d-none d-md-block col-0 my-auto text-center">
+        <span class="button" (click)="sort(4)">CPU</span>
+      </div>
+      <div class="col-md-1 d-none d-md-block col-0 my-auto text-center">
+        <span class="button" (click)="sort(5)">RAM</span>
+      </div>
+      <div class="col-md-1 d-none d-md-block col-0 my-auto text-center">
+        <span class="button" (click)="sort(6)">Disk</span>
+      </div>
+      <div class="col-md-1 col-sm-5 col-5 my-auto text-center">
+        Delete
+      </div>
+    </div>
+
+    <div class="group row py-1 bg-light" *ngFor="let group of sortedGroups">
+      <div class="col-md-1 col-sm-2 col-7 my-auto text-left" [routerLink]="['/group', group.id]">
+        <span class="button">{{ group.id }}</span>
+      </div>
+      <div class="col-md-5 col-sm-3 col-7 my-auto" [routerLink]="['/group', group.id]">
+        <span class="button">{{ group.name }}</span>
+      </div>
+      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-left my-auto" [routerLink]="['/group', group.id]">
+        {{ group.total }}
+      </div>
+      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-center my-auto" [routerLink]="['/group', group.id]">
+        {{ group.active }}
+      </div>
+      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-center my-auto" [routerLink]="['/group', group.id]">
+        {{ group.cpu }}%
+      </div>
+      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-center my-auto" [routerLink]="['/group', group.id]">
+        {{ group.ram }}%
+      </div>
+      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-center my-auto" [routerLink]="['/group', group.id]">
+        {{ group.memory }}%
+      </div>
+      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-center my-auto">
+        <span class="button text-danger" (click)="remove(group.id)">&times;</span>
+      </div>
+    </div>
+
+      </div>
+    </div>
+

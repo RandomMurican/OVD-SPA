@@ -1,0 +1,63 @@
+<!--
+  <div class="alert alert-danger alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Error!</strong> This is an error message.
+</div> 
+-->
+<div class="container h-100 mt-2">
+  <div class="h-100 justify-content-center">
+    <div class="row py-1" style="border:none">
+      <div class="col-md-10 col-sm-8 my-auto">
+        Displaying: 
+        <span class="btn disabled btn-light" *ngIf="displayType[2] < 0 && displayType[3] < 0">Click on a user or group to apply a filter.</span>
+        <span class="btn btn-light mr-1" *ngIf="displayType[2] >= 0" (click)="removeFilter(0)">{{ displayNames[0] }}</span>
+        <span class="btn btn-light" *ngIf="displayType[3] >= 0" (click)="removeFilter(1)">{{ displayNames[1] }}</span>
+      </div>
+      <div class="col-md-2 col-sm-4 my-auto text-right">
+        <select id="display" [(ngModel)]="displayType[0]" (change)="sortSessions()">
+          <option value=0>All</option>
+          <option value=1>Active</option>
+          <option value=2>History</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row py-1 bg-dark text-light">
+      <div class="col-md-4 col-sm-3 col-7 my-auto text-left">
+        <span class="button" (click)="sort(1)">User</span>
+      </div>
+      <div class="col-md-4 d-none d-md-block col-0 my-auto text-left">
+        <span class="button" (click)="sort(2)">Group</span>
+      </div>
+      <div class="col-md-1 d-none d-md-block col-0 my-auto text-center">
+        <span class="button" (click)="sort(3)">Time</span>
+      </div>
+      <div class="col-md-2 d-none d-md-block col-0 my-auto text-center">
+        <span class="button" (click)="sort(4)">Start</span>
+      </div>
+      <div class="col-md-1 col-sm-5 col-5 my-auto text-center">
+        Kill
+      </div>
+    </div>
+      
+    <div class="row py-1 bg-light" *ngFor="let session of sortedSessions">
+      <div class="col-md-4 col-sm-3 col-7 my-auto">
+        <span class="button" (click)="displayUser(session.userId, session.user)">{{ session.user }}</span>
+      </div>
+      <div class="col-md-4 col-sm-4 d-none d-sm-block col-0 text-left my-auto">
+          <span class="button" (click)="displayGroup(session.groupId, session.group)" [ngClass]="{'text-danger': session.group == 'Deleted Group'}">{{ session.group }}</span>
+      </div>
+      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-center my-auto">
+        {{ convertTime(session.time) }}
+      </div>
+      <div class="col-md-2 col-sm-4 d-none d-sm-block col-0 text-center my-auto">
+        {{ session.start | date:'M/dd/yy hh:mm a':'UTC' }}
+      </div>
+      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-center my-auto">
+        <span class="button text-danger" (click)="kill(session.id)" *ngIf="session.active">&times;</span>
+      </div>
+    </div>
+  </div>
+</div>
+    
+      

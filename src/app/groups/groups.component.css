@@ -1,0 +1,11 @@
+.group {
+    border: 1px solid gray;
+}
+
+.button {
+    cursor: pointer;  
+}
+
+.group:hover {
+    opacity: 0.65;
+}

@@ -7,20 +7,20 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CloudService {
-  baseUrl = environment.apiURL + '/groupmanagement';
+  baseUrl = environment.apiURL + 'groupmanagement';
 
   constructor(private http: HttpClient) { }
 
 getServiceOfferings(): Observable<string[]> {
-  return this.http.get<string[]>(this.baseUrl + '/template/templates');
+  return this.http.get<string[]>(this.baseUrl + '/offering/serviceoffering');
 }
 
 getTemplates(): Observable<string[]> {
-  return this.http.get<string[]>(this.baseUrl + '/offering/serviceoffering');
+  return this.http.get<string[]>(this.baseUrl + '/template/templates');
 }
 
 getProtocols(): Observable<string[]> {
-  return this.http.get<string[]>(this.baseUrl + '/offering/serviceoffering');
+  return this.http.get<string[]>(this.baseUrl + '/protocol/protocols');
 }
 
 }

@@ -58,10 +58,10 @@
       </select>
     </div>
     <div class="row pt-2">
-      <label for="service">Service Offering</label>
+      <label for="serviceoffering">Service Offering</label>
     </div>
     <div class="row pb-2">
-      <select class="form-control" name="service" [(ngModel)]="model.service">
+      <select class="form-control" name="serviceoffering" [(ngModel)]="model.serviceoffering">
         <option *ngFor="let service of services">{{ service }}</option>
       </select>
     </div>
@@ -72,18 +72,6 @@
       <select class="form-control" name="protocol" [(ngModel)]="model.protocol">
         <option *ngFor="let protocol of protocols">{{ protocol }}</option>
       </select>
-    </div>
-    <div class="row pt-2">
-      <label for="dawgtags">Users</label>
-    </div>
-    <div class="row pb-2">
-      <textarea
-        class="form-control"
-        name="dawgtags"
-        [(ngModel)]="model.dawgtags"
-        rows="8"
-        placeholder="Dawgtags"
-      ></textarea>
     </div>
     <div class="row">
       <div class="col-md-1"></div>

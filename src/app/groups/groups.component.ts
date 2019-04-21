@@ -143,8 +143,8 @@ export class GroupsComponent implements OnInit {
     }
   }
 
-  remove(id: number) {
-    console.log('Can\'t delete ' + id + ' because function not implemented.');
+  remove(id: number | string) {
+    this.groupService.delete(id);
     this.sortGroups();
   }
 

@@ -10,4 +10,5 @@ export interface Group {
     protocol: string;
     template: string;
     hotspares: number;
+    dawgtags: string[];
 }

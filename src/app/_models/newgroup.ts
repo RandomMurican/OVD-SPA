@@ -6,4 +6,5 @@ export interface Newgroup {
     template: string;
     hotspares: number;
     max: number;
+    dawgtags: string[];
 }

@@ -18,8 +18,10 @@ export class NewGroupComponent implements OnInit {
     protocol: '',
     template: '',
     hotspares: 0,
-    max: 1
+    max: 1,
+    dawgtags: []
   };
+  users = '';
   protocols: string[] = [];
   templates: string[] = [];
   services: string[] = [];
@@ -29,6 +31,7 @@ export class NewGroupComponent implements OnInit {
     private alertifyService: AlertifyService) { }
 
   ngOnInit() {
+    this.parseArray();
     this.cloudService.getProtocols().subscribe((protocols: string[]) => {
       this.protocols = protocols;
       this.model.protocol = this.protocols[0];
@@ -56,6 +59,7 @@ export class NewGroupComponent implements OnInit {
   }
 
   create() {
+    this.parseTextArea();
     const name = this.model.name;
     if (this.model.name.length === 0) {
       this.alertifyService.error('Invalid name', false);
@@ -81,5 +85,18 @@ export class NewGroupComponent implements OnInit {
     this.model.template = '';
     this.model.hotspares = 0;
     this.model.max = 1;
+    this.model.dawgtags = [];
+  }
+
+  parseArray() {
+    this.users = '';
+    this.model.dawgtags.forEach(user => {
+      this.users += user + '\n';
+    });
+  }
+
+  parseTextArea() {
+    this.model.dawgtags = this.users.split('\n');
+    this.model.dawgtags.pop();
   }
 }

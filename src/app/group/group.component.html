@@ -6,4 +6,8 @@
   <h5>Protocol: </h5><span>{{ element.protocol }}</span>
   <h5>Total: </h5><span>{{ element.total }}</span>
   <h5>Active: </h5><span>{{ element.active }}</span>
+  <h5>Users: </h5>
+  <ul>
+    <li *ngFor="let user of element.dawgtags">{{ user }}</li>
+  </ul>
 </div>

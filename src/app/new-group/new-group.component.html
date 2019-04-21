@@ -73,6 +73,20 @@
         <option *ngFor="let protocol of protocols">{{ protocol }}</option>
       </select>
     </div>
+
+    <div class="row pt-2">
+        <label for="image">Users</label>
+      </div>
+    <div class="row pb-2">
+        <textarea
+        class="form-control"
+        name="users"
+        [(ngModel)]="users"
+        rows="8"
+        placeholder="Dawgtags"
+      ></textarea>
+    </div>
+
     <div class="row">
       <div class="col-md-1"></div>
       <button

@@ -32,7 +32,7 @@ export class NewGroupComponent implements OnInit {
       this.model.protocol = this.protocols[0];
     }, error => {
       console.log(error);
-      this.protocols = ['Fake 1', 'Fake 2', 'Fake 3'];
+      this.protocols = ['ssh', 'rdp'];
       this.model.protocol = this.protocols[0];
     });
     this.cloudService.getServiceOfferings().subscribe((services: string[]) => {

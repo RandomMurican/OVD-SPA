@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { appRoutes } from './routes';
 import { SessionsComponent } from './sessions/sessions.component';
 import { GroupComponent } from './group/group.component';
+import { NavComponent } from './nav/nav.component';
+import { ActivityComponent } from './activity/activity.component';
 
 @NgModule({
    declarations: [
@@ -18,7 +20,9 @@ import { GroupComponent } from './group/group.component';
       GroupsComponent,
       NewGroupComponent,
       SessionsComponent,
-      GroupComponent
+      GroupComponent,
+      NavComponent,
+      ActivityComponent
    ],
    imports: [
       BrowserModule,

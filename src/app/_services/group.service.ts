@@ -13,21 +13,19 @@ export class GroupService {
 
   constructor(private http: HttpClient) { }
 
-create(model: Newgroup) {
+create(model: Newgroup): Observable<boolean> {
   // Call the api to create a group returning true if it was successful
   // return this.http.post(this.baseUrl + 'create', model);
-  console.log('POST: ' + this.baseUrl);
-  return this.http.post(this.baseUrl, model);
+  return this.http.post<boolean>(this.baseUrl, model);
 }
 
-delete(id: number | string) {
+delete(id: number | string): Observable<boolean> {
   // return this.http.post(this.baseUrl + 'delete', model);
-  console.log('DELETE: ' + this.baseUrl + '/' + id);
-  this.http.delete(this.baseUrl + '/' + id);
+  return this.http.delete<boolean>(this.baseUrl + '/' + id);
 }
 
 getGroups(): Observable<Group[]> {
-  console.log('GET<Group[]>: ' + this.baseUrl);
+  console.log('GET: ' + this.baseUrl);
   return this.http.get<Group[]>(this.baseUrl);
 }
 

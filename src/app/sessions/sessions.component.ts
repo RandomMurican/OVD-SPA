@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../_services/session.service';
 import { Session } from '../_models/session';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-sessions',
@@ -15,7 +16,7 @@ export class SessionsComponent implements OnInit {
   sortedSessions: Session[];
   test: number[];
 
-  constructor(private sessionService: SessionService) { }
+  constructor(private sessionService: SessionService, private alertifyService: AlertifyService) { }
 
   ngOnInit() {
     this.displayType = [0, 0, -1, -1];
@@ -27,7 +28,7 @@ export class SessionsComponent implements OnInit {
       this.sessions = sessions;
       this.sortSessions();
     }, error => {
-      console.log('ERROR: ' + error);
+      this.alertifyService.error('Failed to load sessions.', false);
     });
   }
 
@@ -75,6 +76,7 @@ export class SessionsComponent implements OnInit {
   }
 
   displayGroup(id: number, group: string) {
+    console.log(id);
     this.displayType[3] = id;
     this.displayNames[1] = group;
     this.sortSessions();
@@ -86,7 +88,7 @@ export class SessionsComponent implements OnInit {
   }
 
   kill(id: number) {
-    console.log('Kill session ' + id);
+    this.alertifyService.error('I\'m sorry Dave, I can\'t let you do that.', false);
   }
 
   sortByIdPush(newSession: Session) {

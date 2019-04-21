@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupService } from '../_services/group.service';
+import { AlertifyService } from '../_services/alertify.service';
 import { Group } from '../_models/group';
 
 @Component({
@@ -12,7 +13,7 @@ export class GroupsComponent implements OnInit {
   sortedGroups: Group[] = [];
   sortParameter = 0;
 
-  constructor(private groupService: GroupService) { }
+  constructor(private groupService: GroupService, private alertifyService: AlertifyService) { }
 
   ngOnInit() {
     this.loadGroups();
@@ -23,7 +24,7 @@ export class GroupsComponent implements OnInit {
       this.groups = groups;
       this.sortGroups();
     }, error => {
-      console.log('ERROR: ' + error);
+      this.alertifyService.error('There was an error loading the groups.', false);
     });
   }
 
@@ -144,8 +145,16 @@ export class GroupsComponent implements OnInit {
   }
 
   remove(id: number | string) {
-    this.groupService.delete(id);
-    this.sortGroups();
+    this.groupService.delete(id).subscribe((response: boolean) => {
+      if (response) {
+        this.alertifyService.success('Deleted group id:' + id, true);
+        this.sortGroups();
+      } else {
+        this.alertifyService.error('Failed to delete group id:' + id, false);
+      }
+    }, error => {
+      this.alertifyService.error('Failed to delete group id:' + id, false);
+    });
   }
 
   sort(parameter: number | string) {

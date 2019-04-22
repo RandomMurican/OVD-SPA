@@ -125,14 +125,13 @@ export class NewGroupComponent implements OnInit {
 
   parseTextArea() {
     // Turn commas and spaces into new lines and convert into an array
-    this.model.dawgtags = this.users.replace(/,/gi, '\n').replace(/ /gi, '\n').trim().toLowerCase().split('\n');
-    let len = this.model.dawgtags.length;
-    for (let index = 0; index < len; index++) {
-      if (this.model.dawgtags[index] === '') {
-        this.model.dawgtags.splice(index, 1);
-        index--; len--;
+    const dawgtags = this.users.replace(/,/gi, '\n').replace(/ /gi, '\n').trim().toLowerCase().split('\n');
+    for (let index = 0; index < dawgtags.length; index++) {
+      if (dawgtags[index] !== '' && !this.model.dawgtags.includes(dawgtags[index])) {
+        this.model.dawgtags.push(dawgtags[index]);
+        this.alertifyService.success(dawgtags[index], false);
       } else {
-        this.model.dawgtags[index] = this.model.dawgtags[index].trim();
+        this.alertifyService.error(dawgtags[index], false);
       }
     }
   }

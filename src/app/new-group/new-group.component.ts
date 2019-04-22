@@ -97,6 +97,8 @@ export class NewGroupComponent implements OnInit {
 
   parseTextArea() {
     this.model.dawgtags = this.users.split('\n');
-    this.model.dawgtags.pop();
+    if (this.model.dawgtags[this.model.dawgtags.length]) {
+      this.model.dawgtags.pop();
+    }
   }
 }

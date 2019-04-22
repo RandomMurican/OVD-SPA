@@ -37,7 +37,7 @@ export class NewGroupComponent implements OnInit {
       this.model.protocol = this.protocols[0];
     }, error => {
       this.alertifyService.error('Failed to load available protocols.', false);
-      this.protocols = ['ssh', 'rdp'];
+      this.protocols = [''];
       this.model.protocol = this.protocols[0];
     });
     this.cloudService.getServiceOfferings().subscribe((services: string[]) => {
@@ -45,7 +45,7 @@ export class NewGroupComponent implements OnInit {
       this.model.serviceoffering = this.services[0];
     }, error => {
       this.alertifyService.error('Failed to load available service offerings.', false);
-      this.services = ['Fake 1', 'Fake 2', 'Fake 3'];
+      this.services = [''];
       this.model.serviceoffering = this.services[0];
     });
     this.cloudService.getTemplates().subscribe((templates: string[]) => {
@@ -53,27 +53,55 @@ export class NewGroupComponent implements OnInit {
       this.model.template = this.templates[0];
     }, error => {
       this.alertifyService.error('Failed to load available templates.', false);
-      this.templates = ['Fake 1', 'Fake 2', 'Fake 3'];
+      this.templates = [''];
       this.model.template = this.templates[0];
     });
   }
 
   create() {
+    this.users = this.users.trim();
     this.parseTextArea();
-    const name = this.model.name;
     if (this.model.name.length === 0) {
-      this.alertifyService.error('Invalid name', false);
-    }
-    this.groupService.create(this.model).subscribe((response: boolean) => {
-      if (response) {
-        this.alertifyService.success('Created group ' + name, true);
-        this.router.navigate(['/groups']);
-      } else {
-        this.alertifyService.error('Failed to create group ' + name, false);
+      this.alertifyService.error('Name is mandatory', false);
+    } else if (!/^[\w\-\s]+$/.test(this.model.name)) {
+      this.alertifyService.error('Name can only be alphanumeric with hyphens.', false);
+    } else if (this.model.hotspares < 0) {
+      this.alertifyService.error('Hotspares cannot be negative', false);
+    } else if (this.model.max < 0) {
+      this.alertifyService.error('Max connections cannot be negative', false);
+    } else if (this.model.total < 0) {
+      this.alertifyService.error('Total VMs cannot be negative', false);
+    } else if (this.model.hotspares % 1 !== 0) {
+      this.alertifyService.error('Hotspares is invalid', false);
+    } else if (this.model.max % 1 !== 0) {
+      this.alertifyService.error('Max connections is invalid', false);
+    } else if (this.model.total % 1 !== 0) {
+      this.alertifyService.error('Total VMs is invalid', false);
+    } else if (this.model.dawgtags.length === 0) {
+      this.alertifyService.error('No users were given', false);
+    } else {
+      let test = true;
+      for (const dawgtag in this.model.dawgtags) {
+        if (!/^[Ss][Ii][Uu]85[0-9]{7}$/.test(this.model.dawgtags[dawgtag])) {
+          this.alertifyService.error(this.model.dawgtags[dawgtag] + ' is not a dawgtag.', false);
+          test = false;
+          break;
+        }
       }
-    }, error => {
-      this.alertifyService.error('Failed to create group ' + name, false);
-    });
+      if (test) {
+        const name = this.model.name;
+        this.groupService.create(this.model).subscribe((response: boolean) => {
+          if (response) {
+            this.alertifyService.success('Created group ' + name, true);
+            this.router.navigate(['/groups']);
+          } else {
+            this.alertifyService.error('Failed to create group ' + name, false);
+          }
+        }, error => {
+          this.alertifyService.error('Failed to create group ' + name, false);
+        });
+      }
+    }
   }
 
   // Clears the entire form and backs the user out of the page
@@ -96,9 +124,16 @@ export class NewGroupComponent implements OnInit {
   }
 
   parseTextArea() {
-    this.model.dawgtags = this.users.split('\n');
-    if (this.model.dawgtags[this.model.dawgtags.length]) {
-      this.model.dawgtags.pop();
+    // Turn commas and spaces into new lines and convert into an array
+    this.model.dawgtags = this.users.replace(/,/gi, '\n').replace(/ /gi, '\n').trim().toLowerCase().split('\n');
+    let len = this.model.dawgtags.length;
+    for (let index = 0; index < len; index++) {
+      if (this.model.dawgtags[index] === '') {
+        this.model.dawgtags.splice(index, 1);
+        index--; len--;
+      } else {
+        this.model.dawgtags[index] = this.model.dawgtags[index].trim();
+      }
     }
   }
 }

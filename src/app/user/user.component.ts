@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
 import { AuthService } from '../_services/auth.service';
 import { Usergroup } from '../_models/usergroup';
+import { Group } from '../_models/group';
 
 @Component({
   selector: 'app-user',
@@ -17,7 +18,10 @@ export class UserComponent implements OnInit {
       affinity: false,
       total: 0,
       connections: [],
-      users: {}
+      users: {
+        id: 1,
+        users: []
+      }
     },
     {
       id: 1,
@@ -26,7 +30,10 @@ export class UserComponent implements OnInit {
       affinity: false,
       total: 0,
       connections: [],
-      users: {}
+      users: {
+        id: 1,
+        users: []
+      }
     },
     {
       id: 2,
@@ -35,7 +42,10 @@ export class UserComponent implements OnInit {
       affinity: false,
       total: 0,
       connections: [],
-      users: {}
+      users: {
+        id: 1,
+        users: []
+      }
     },
     {
       id: 3,
@@ -44,7 +54,10 @@ export class UserComponent implements OnInit {
       affinity: false,
       total: 0,
       connections: [],
-      users: {}
+      users: {
+        id: 1,
+        users: []
+      }
     }
   ];
 

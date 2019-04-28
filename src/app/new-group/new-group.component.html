@@ -1,11 +1,14 @@
 <div class="container mt-3">
-  <form class="col-md-6 h-100 justify-content-center" #newGroupForm="ngForm" (ngSubmit)="create()">
+  <form class="col-md-8 h-100 justify-content-center" #editGroupUserForm="ngForm" [(ngModel)]="model">
     <legend class="text-center">Create Group</legend>
+    <p>Create a blank group. Continue to add users or Quit to leave a shell.</p>
+
     <div class="row pt-2">
       <label for="name">Group Name</label>
     </div>
     <div class="row pb-2">
       <input
+        id="name"
         type="text"
         class="form-control"
         name="name"
@@ -13,95 +16,65 @@
         placeholder="Group Name"
       />
     </div>
+
     <div class="row pt-2">
-      <label class="col-md-3 text-center my-auto" for="total">VMs to Create</label>
-      <div class="col-md-1"></div>
-      <label class="col-md-4 text-center my-auto" for="max">
-        Max Connections<br />per VM
-      </label>
-      <div class="col-md-1"></div>
-      <label class="col-md-3 text-center my-auto" for="hotspares">Hotspares</label>
+      <label for="type">Group Type</label>
+    </div>
+    <div class="row pb-2">
+      <select class="form-control" name="type" id="type">
+        <option>Orginizational</option>
+        <option>Balanced</option>
+      </select>
     </div>
 
-    <div class="row pb-2">
+    <div class="row pt-2">
+      <div class="pl-3">
+        <input
+          id="affinity"
+          type="checkbox"
+          name="affinity"
+          class="form-check-input"
+          [checked]="model.affinity"
+        />
+        <label for="affinity">Session Affinity</label>
+      </div>
+    </div>
+
+    <div class="row pt-2">
+      <label for="max">Max Connections</label>
+    </div>
+    <div class="row mb-4">
       <input
+        id="max"
         type="number"
-        class="col-md-3 form-control"
-        name="total"
-        [(ngModel)]="model.total"
-        placeholder="Total VMs"
-      />
-      <div class="col-md-1"></div>
-      <input
-        type="number"
-        class="col-md-4 form-control"
+        class="form-control"
         name="max"
-        [(ngModel)]="model.max"
+        [(ngModel)]="model.total"
         placeholder="Max Connections"
       />
-      <div class="col-md-1"></div>
-      <input
-        type="number"
-        class="col-md-3 form-control"
-        name="hotspares"
-        [(ngModel)]="model.hotspares"
-        placeholder="Hotspares"
-      />
-    </div>
-
-    <div class="row pt-2">
-      <label for="template">Template</label>
-    </div>
-    <div class="row pb-2">
-      <select class="form-control" name="template" [(ngModel)]="model.template">
-        <option *ngFor="let template of templates">{{ template }}</option>
-      </select>
-    </div>
-    <div class="row pt-2">
-      <label for="serviceoffering">Service Offering</label>
-    </div>
-    <div class="row pb-2">
-      <select class="form-control" name="serviceoffering" [(ngModel)]="model.serviceoffering">
-        <option *ngFor="let service of services">{{ service }}</option>
-      </select>
-    </div>
-    <div class="row pt-2">
-      <label for="protocol">Protocol</label>
-    </div>
-    <div class="row pb-2">
-      <select class="form-control" name="protocol" [(ngModel)]="model.protocol">
-        <option *ngFor="let protocol of protocols">{{ protocol }}</option>
-      </select>
-    </div>
-
-    <div class="row pt-2">
-        <label for="image">Users</label>
-      </div>
-    <div class="row pb-2">
-        <textarea
-        class="form-control"
-        name="users"
-        [(ngModel)]="users"
-        rows="8"
-        placeholder="Dawgtags"
-      ></textarea>
     </div>
 
     <div class="row">
-      <div class="col-md-1"></div>
       <button
         type="button"
         class="btn btn-danger col-md-3"
         (click)='clearForm()'
         [routerLink]="['/groups']"
-      >
-        Cancel
-      </button>
-      <div class="col-md-4"></div>
-      <button type="submit" class="btn btn-success col-md-3">
-        Create
-      </button>
+      >Cancel</button>
+      <div class="col-md-2"></div>
+      <button
+        type="button"
+        class="btn btn-info col-md-3"
+        (click)='update()'
+        [routerLink]="['/edit/users']"
+      >Save and Continue</button>
       <div class="col-md-1"></div>
+      <button
+        type="button"
+        class="btn btn-success col-md-3"
+        (click)='update()'
+        [routerLink]="['/groups']"
+      >Save and Quit</button>
     </div>
   </form>
 </div>

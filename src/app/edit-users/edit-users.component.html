@@ -1,0 +1,56 @@
+<div class="container mt-3">
+  <form class="col-md-8 h-100 justify-content-center" #newGroupForm="ngForm" [ngModelOptions]="{standalone: true}" name="newGroupForm" [(ngModel)]="group" (ngSubmit)="update()" ngDefaultControl>
+    <legend class="text-center">Edit Users in <span name="groupName">{{ group.name }}</span></legend>
+    <ul>
+      <li>Users are given in the form of dawgtags written as SIU85XXXXXXX, 85XXXXXXX, or simply XXXXXXX.</li>
+      <li>Dawgtags can be separated by any amount of commas or white space (new lines, spaces, tabs)</li>
+      <li>Duplicates will be ignored.</li>
+    </ul>
+
+    <div class="row pt-2">
+      <input
+        type="checkbox"
+        name="all"
+        class="form-check-input"
+        [(ngModel)]="check"
+        [ngModelOptions]="{standalone: true}"
+      />
+      <label for="all">Add all users. <span class="text-danger">(This deletes the list of users)</span></label>
+    </div>
+
+    <div class="row pt-2 mb-3">
+      <label for="users">Users</label>
+      <textarea
+        class="form-control"
+        name="users"
+        [(ngModel)]="users"
+        rows="16"
+        placeholder="Dawgtags"
+        [disabled]="check"
+      ></textarea>
+    </div>
+
+    <div class="row">
+      <button
+        type="button"
+        class="btn btn-danger col-md-3"
+        (click)='clearForm()'
+        [routerLink]="['/groups']"
+      >Cancel</button>
+      <div class="col-md-2"></div>
+      <button
+        type="button"
+        class="btn btn-info col-md-3"
+        (click)='update()'
+        [routerLink]="['/edit/vms']"
+      >Save and Continue</button>
+      <div class="col-md-1"></div>
+      <button
+        type="button"
+        class="btn btn-success col-md-3"
+        (click)='update()'
+        [routerLink]="['/groups']"
+      >Save and Quit</button>
+    </div>
+  </form>
+</div>

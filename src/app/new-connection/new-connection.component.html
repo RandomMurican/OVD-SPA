@@ -1,0 +1,86 @@
+<div class="container mt-3">
+    <form class="col-md-8 h-100 justify-content-center" #editVMForm="ngForm" (ngSubmit)="create()">
+      <legend class="text-center">Create VM</legend>
+      <p><span class="text-danger">Warning:</span>  Creating VMs is intensive on the system, proceed with caution</p>
+      <div class="row pt-2">
+        <label for="name">VM Name (If multiple are to be created, a number will be appended to the end)</label>
+      </div>
+      <div class="row pb-2">
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          [(ngModel)]="model.name"
+          placeholder="Group Name"
+        />
+      </div>
+      <div class="row pt-2">
+          <div class="col-md-1"></div>
+        <label class="col-md-4 text-center my-auto" for="total">VMs to Create</label>
+        <div class="col-md-2"></div>
+        <label class="col-md-4 text-center my-auto" for="max">Max Connections</label>
+        <div class="col-md-1"></div>
+      </div>
+  
+      <div class="row pb-2">
+        <div class="col-md-1"></div>
+        <input
+          type="number"
+          class="col-md-4 form-control"
+          name="total"
+          [(ngModel)]="total"
+          placeholder="Total VMs"
+        />
+        <div class="col-md-2"></div>
+        <input
+          type="number"
+          class="col-md-4 form-control"
+          name="max"
+          [(ngModel)]="model.maxConnections"
+          placeholder="Max Connections"
+        />
+        <div class="col-md-1"></div>
+      </div>
+  
+      <div class="row pt-2">
+        <label for="template">Template</label>
+      </div>
+      <div class="row pb-2">
+        <select class="form-control" name="template" [(ngModel)]="model.template">
+          <option *ngFor="let template of templates">{{ template }}</option>
+        </select>
+      </div>
+      <div class="row pt-2">
+        <label for="serviceoffering">Service Offering</label>
+      </div>
+      <div class="row pb-2">
+        <select class="form-control" name="serviceoffering" [(ngModel)]="model.service">
+          <option *ngFor="let service of services">{{ service }}</option>
+        </select>
+      </div>
+      <div class="row pt-2">
+        <label for="protocol">Protocol</label>
+      </div>
+      <div class="row mb-5">
+        <select class="form-control" name="protocol" [(ngModel)]="model.protocol">
+          <option *ngFor="let protocol of protocols">{{ protocol }}</option>
+        </select>
+      </div>
+  
+      <div class="row">
+        <button
+          type="button"
+          class="btn btn-danger col-md-3"
+          (click)='clearForm()'
+          [routerLink]="['/edit/vms']"
+        >Cancel</button>
+        <div class="col-md-6"></div>
+        <button
+          type="button"
+          class="btn btn-success col-md-3"
+          (click)='create()'
+          [routerLink]="['/edit/vms']"
+        >Create</button>
+      </div>
+    </form>
+  </div>

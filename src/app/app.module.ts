@@ -13,6 +13,12 @@ import { SessionsComponent } from './sessions/sessions.component';
 import { GroupComponent } from './group/group.component';
 import { NavComponent } from './nav/nav.component';
 import { ActivityComponent } from './activity/activity.component';
+import { UserComponent } from './user/user.component';
+import { ChartsModule } from 'ng2-charts';
+import { EditUsersComponent } from './edit-users/edit-users.component';
+import { EditConnectionsComponent } from './edit-connections/edit-connections.component';
+import { NewConnectionComponent } from './new-connection/new-connection.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
    declarations: [
@@ -22,14 +28,20 @@ import { ActivityComponent } from './activity/activity.component';
       SessionsComponent,
       GroupComponent,
       NavComponent,
-      ActivityComponent
+      ActivityComponent,
+      UserComponent,
+      EditUsersComponent,
+      EditConnectionsComponent,
+      NewConnectionComponent,
+      DashboardComponent
    ],
    imports: [
       BrowserModule,
       FormsModule,
       HttpClientModule,
       RouterModule.forRoot(appRoutes),
-      BsDropdownModule.forRoot()
+      BsDropdownModule.forRoot(),
+      ChartsModule
    ],
    providers: [],
    bootstrap: [

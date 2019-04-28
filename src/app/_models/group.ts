@@ -1,14 +1,12 @@
+import { Connection } from './connection';
+import { Usergroup } from './usergroup';
+
 export interface Group {
     id: number;
     name: string;
+    type: string;
+    affinity: boolean;
     total: number;
-    active: number;
-    ram: number;
-    memory: number;
-    cpu: number;
-    serviceoffering: string;
-    protocol: string;
-    template: string;
-    hotspares: number;
-    dawgtags: string[];
+    connections: Connection[];
+    users: Usergroup;
 }

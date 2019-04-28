@@ -13,7 +13,6 @@ export class SessionService {
   constructor(private http: HttpClient) { }
 
   getSessions(): Observable<Session[]> {
-    console.log('GET: ' + this.baseUrl);
     return this.http.get<Session[]>(this.baseUrl);
   }
 

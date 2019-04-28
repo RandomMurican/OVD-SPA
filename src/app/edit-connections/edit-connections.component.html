@@ -1,0 +1,47 @@
+<div class="container mt-3">
+  <form class="col-md-8 h-100 justify-content-center" #newGroupForm="ngForm" (ngSubmit)="update()">
+    <legend class="text-center">Edit VMs in <span name="groupName" [(ngModel)]="groupName">{{ groupName }}</span></legend>
+    <ul>
+      <li>Add any existing VMs to the group or create new ones.</li>
+    </ul>
+
+    <div class="row pt-2">
+      <div class="col-md-10"></div>
+      <button
+        type="button"
+        class="btn btn-info col-md-2"
+        [routerLink]="['/new/vm']"
+      >Create</button>
+    </div>
+
+    <div class="row pl-2 pt-2 mb-3" style="height:30em;overflow-y:scroll">
+      <div class="container">
+        <div class="row col-md-12 mb-2" *ngFor="let connection of availableConnections">
+          <input
+            id="vm-{{ connection.id }}"
+            type="checkbox"
+            name="vm-{{ connection.id }}"
+            class="form-check-input"
+            [checked]="connectionsInGroup.includes(connection.id)"
+          />
+          <label for="vm-{{ connection.id }}">{{ connection.id }}: {{ connection.name }}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <button
+        type="button"
+        class="btn btn-danger col-md-3"
+        [routerLink]="['/groups']"
+      >Cancel</button>
+      <div class="col-md-6"></div>
+      <button
+        type="button"
+        class="btn btn-success col-md-3"
+        (click)='update()'
+        [routerLink]="['/groups']"
+      >Save</button>
+    </div>
+  </form>
+</div>

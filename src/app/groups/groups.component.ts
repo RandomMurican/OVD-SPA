@@ -36,13 +36,13 @@ export class GroupsComponent implements OnInit {
       } else if (Math.abs(this.sortParameter) === 2) {
         this.sortByVmPush(group);
       } else if (Math.abs(this.sortParameter) === 3) {
-        this.sortByActivePush(group);
+        // this.sortByActivePush(group);
       } else if (Math.abs(this.sortParameter) === 4) {
-        this.sortByCpuPush(group);
+        // this.sortByCpuPush(group);
       } else if (Math.abs(this.sortParameter) === 5) {
-        this.sortByRamPush(group);
+        // this.sortByRamPush(group);
       } else if (Math.abs(this.sortParameter) === 6) {
-        this.sortByDiskPush(group);
+        // this.sortByDiskPush(group);
       } else {
         this.sortByIdPush(group);
       }
@@ -77,6 +77,7 @@ export class GroupsComponent implements OnInit {
     }
   }
 
+  /*
   sortByActivePush(newGroup: Group) {
     const position = this.sortedGroups.findIndex((group: Group) => {
       if (this.sortParameter > 0) {
@@ -131,7 +132,7 @@ export class GroupsComponent implements OnInit {
     } else {
       this.sortedGroups.splice(position, 0, newGroup);
     }
-  }
+  } */
 
   sortByIdPush(newGroup: Group) {
     const position = this.sortedGroups.findIndex((group: Group) => {

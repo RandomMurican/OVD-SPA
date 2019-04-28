@@ -3,6 +3,7 @@ import { UserService } from '../_services/user.service';
 import { AuthService } from '../_services/auth.service';
 import { Usergroup } from '../_models/usergroup';
 import { Group } from '../_models/group';
+import { Connection } from '../_models/connection';
 
 @Component({
   selector: 'app-user',
@@ -17,6 +18,7 @@ export class UserComponent implements OnInit {
       type: 'Orginizational',
       affinity: false,
       total: 0,
+      max: 1,
       connections: [],
       users: {
         id: 1,
@@ -29,6 +31,7 @@ export class UserComponent implements OnInit {
       type: 'Orginizational',
       affinity: false,
       total: 0,
+      max: 1,
       connections: [],
       users: {
         id: 1,
@@ -41,6 +44,7 @@ export class UserComponent implements OnInit {
       type: 'Orginizational',
       affinity: false,
       total: 0,
+      max: 1,
       connections: [],
       users: {
         id: 1,
@@ -53,7 +57,25 @@ export class UserComponent implements OnInit {
       type: 'Orginizational',
       affinity: false,
       total: 0,
-      connections: [],
+      max: 1,
+      connections: [
+        {
+          id: 3,
+          name: 'sgs',
+          maxConnections: 5,
+          template: 'yes',
+          service: 'yes',
+          protocol: 'rpd',
+        },
+        {
+          id: 3,
+          name: 'sgs',
+          maxConnections: 5,
+          template: 'yes',
+          service: 'yes',
+          protocol: 'rpfdsfd',
+        }
+      ],
       users: {
         id: 1,
         users: []
@@ -65,4 +87,19 @@ export class UserComponent implements OnInit {
 
   ngOnInit() { }
 
-}
+   conType(connections: Connection[]) {
+     if (connections.length === 0){
+       return 'null';
+     }
+     if (connections.length === 1){
+       return connections[0].protocol;
+     }
+     const previousProtocol = connections[0].protocol;
+     for (let connection of connections){
+      if (connection.protocol != previousProtocol){
+        return 'mixed';
+      } 
+     }
+     return previousProtocol;
+     }
+  }

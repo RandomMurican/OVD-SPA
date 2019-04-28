@@ -15,6 +15,7 @@ export class EditUsersComponent implements OnInit {
     type: 'Orginizational',
     affinity: false,
     total: 0,
+    max: 1,
     connections: [],
     users: {
       id: 1,

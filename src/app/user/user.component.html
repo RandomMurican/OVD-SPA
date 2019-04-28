@@ -1,0 +1,10 @@
+
+<div class = "card-deck">
+    <div *ngFor="let group of groups" class="card text-left mt-3 ml-4"  style="max-width: 18rem; height: 10rem">
+        <div class="card-body">
+            
+        <h1 [innerText]="conType(this.group.connections)" class="card-text text-center"></h1>
+        <p class = "card-footer mt-4" ><small class = "text-muted"> {{ group.name }} </small></p>
+        </div>
+    </div>
+</div>

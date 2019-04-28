@@ -7,6 +7,7 @@ export interface Group {
     type: string;
     affinity: boolean;
     total: number;
+    max: number;
     connections: Connection[];
     users: Usergroup;
 }

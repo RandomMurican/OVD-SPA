@@ -17,6 +17,7 @@ export class NewGroupComponent implements OnInit {
     name: '',
     affinity: false,
     total: 0,
+    max: 1,
     type: '',
     connections: [],
     users: {

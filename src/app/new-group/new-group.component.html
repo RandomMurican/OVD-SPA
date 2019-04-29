@@ -1,5 +1,5 @@
 <div class="container mt-3">
-  <form class="col-md-8 h-100 justify-content-center" #editGroupUserForm="ngForm" [(ngModel)]="model">
+  <form class="col-md-8 h-100 justify-content-center">
     <legend class="text-center">Create Group</legend>
     <p>Create a blank group. Continue to add users or Quit to leave a shell.</p>
 
@@ -12,7 +12,7 @@
         type="text"
         class="form-control"
         name="name"
-        [(ngModel)]="model.name"
+        [(ngModel)]="group.name"
         placeholder="Group Name"
       />
     </div>
@@ -21,9 +21,9 @@
       <label for="type">Group Type</label>
     </div>
     <div class="row pb-2">
-      <select class="form-control" name="type" id="type">
+      <select class="form-control" name="type" id="type" [(ngModel)]="group.type">
         <option>Orginizational</option>
-        <option>Balanced</option>
+        <option>Balancing</option>
       </select>
     </div>
 
@@ -34,7 +34,7 @@
           type="checkbox"
           name="affinity"
           class="form-check-input"
-          [checked]="model.affinity"
+          [checked]="group.affinity"
         />
         <label for="affinity">Session Affinity</label>
       </div>
@@ -49,7 +49,7 @@
         type="number"
         class="form-control"
         name="max"
-        [(ngModel)]="model.total"
+        [(ngModel)]="group.max"
         placeholder="Max Connections"
       />
     </div>
@@ -65,15 +65,13 @@
       <button
         type="button"
         class="btn btn-info col-md-3"
-        (click)='update()'
-        [routerLink]="['/edit/users']"
+        (click)='update(true)'
       >Save and Continue</button>
       <div class="col-md-1"></div>
       <button
         type="button"
         class="btn btn-success col-md-3"
-        (click)='update()'
-        [routerLink]="['/groups']"
+        (click)='update(false)'
       >Save and Quit</button>
     </div>
   </form>

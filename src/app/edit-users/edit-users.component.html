@@ -1,6 +1,6 @@
 <div class="container mt-3">
-  <form class="col-md-8 h-100 justify-content-center" #newGroupForm="ngForm" [ngModelOptions]="{standalone: true}" name="newGroupForm" [(ngModel)]="group" (ngSubmit)="update()" ngDefaultControl>
-    <legend class="text-center">Edit Users in <span name="groupName">{{ group.name }}</span></legend>
+  <form class="col-md-8 h-100 justify-content-center" #Fm="ngForm" >
+    <legend class="text-center">Edit Users in <span>{{ group.name }}</span></legend>
     <ul>
       <li>Users are given in the form of dawgtags written as SIU85XXXXXXX, 85XXXXXXX, or simply XXXXXXX.</li>
       <li>Dawgtags can be separated by any amount of commas or white space (new lines, spaces, tabs)</li>
@@ -9,13 +9,14 @@
 
     <div class="row pt-2">
       <input
+        id="all"
         type="checkbox"
         name="all"
         class="form-check-input"
         [(ngModel)]="check"
-        [ngModelOptions]="{standalone: true}"
+        (change)="changed()"
       />
-      <label for="all">Add all users. <span class="text-danger">(This deletes the list of users)</span></label>
+      <label for="all">Add all users.</label>
     </div>
 
     <div class="row pt-2 mb-3">
@@ -23,7 +24,7 @@
       <textarea
         class="form-control"
         name="users"
-        [(ngModel)]="users"
+        [(ngModel)]="usersText"
         rows="16"
         placeholder="Dawgtags"
         [disabled]="check"
@@ -41,15 +42,13 @@
       <button
         type="button"
         class="btn btn-info col-md-3"
-        (click)='update()'
-        [routerLink]="['/edit/vms']"
+        (click)='update(true)'
       >Save and Continue</button>
       <div class="col-md-1"></div>
       <button
         type="button"
         class="btn btn-success col-md-3"
-        (click)='update()'
-        [routerLink]="['/groups']"
+        (click)='update(false)'
       >Save and Quit</button>
     </div>
   </form>

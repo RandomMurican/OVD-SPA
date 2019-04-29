@@ -9,13 +9,14 @@ import { Group } from '../_models/group';
 })
 export class GroupService {
   baseUrl = environment.apiURL + 'group';
+  editingGroup: number;
 
   constructor(private http: HttpClient) { }
 
-create(model: Group): Observable<boolean> {
+create(model: Group): Observable<Group> {
   // Call the api to create a group returning true if it was successful
   // return this.http.post(this.baseUrl + 'create', model);
-  return this.http.post<boolean>(this.baseUrl, model);
+  return this.http.post<Group>(this.baseUrl + '/creategroup', model);
 }
 
 delete(id: number | string): Observable<boolean> {

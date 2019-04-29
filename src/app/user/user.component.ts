@@ -16,8 +16,9 @@ export class UserComponent implements OnInit {
       name: 'Group Name',
       type: 'Orginizational',
       affinity: false,
-      total: 0,
+      max: 0,
       connections: [],
+      allUsers: true,
       users: {
         id: 1,
         users: []
@@ -28,8 +29,9 @@ export class UserComponent implements OnInit {
       name: 'Other Group',
       type: 'Orginizational',
       affinity: false,
-      total: 0,
+      max: 0,
       connections: [],
+      allUsers: true,
       users: {
         id: 1,
         users: []
@@ -40,8 +42,9 @@ export class UserComponent implements OnInit {
       name: 'Some Name',
       type: 'Orginizational',
       affinity: false,
-      total: 0,
+      max: 0,
       connections: [],
+      allUsers: true,
       users: {
         id: 1,
         users: []
@@ -52,8 +55,9 @@ export class UserComponent implements OnInit {
       name: 'Square',
       type: 'Orginizational',
       affinity: false,
-      total: 0,
+      max: 0,
       connections: [],
+      allUsers: true,
       users: {
         id: 1,
         users: []

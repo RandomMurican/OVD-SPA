@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GroupService } from '../_services/group.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { Group } from '../_models/group';
+import { Connection } from '../_models/connection';
 
 @Component({
   selector: 'app-groups',
@@ -66,9 +67,9 @@ export class GroupsComponent implements OnInit {
   sortByVmPush(newGroup: Group) {
     const position = this.sortedGroups.findIndex((group: Group) => {
       if (this.sortParameter > 0) {
-        return group.total >= newGroup.total;
+        return group.connections.length >= newGroup.connections.length;
       }
-      return group.total <= newGroup.total;
+      return group.connections.length <= newGroup.connections.length;
     });
     if (position === -1) {
       this.sortedGroups.push(newGroup);
@@ -76,63 +77,6 @@ export class GroupsComponent implements OnInit {
       this.sortedGroups.splice(position, 0, newGroup);
     }
   }
-
-  /*
-  sortByActivePush(newGroup: Group) {
-    const position = this.sortedGroups.findIndex((group: Group) => {
-      if (this.sortParameter > 0) {
-        return group.active >= newGroup.active;
-      }
-      return group.active <= newGroup.active;
-    });
-    if (position === -1) {
-      this.sortedGroups.push(newGroup);
-    } else {
-      this.sortedGroups.splice(position, 0, newGroup);
-    }
-  }
-
-  sortByCpuPush(newGroup: Group) {
-    const position = this.sortedGroups.findIndex((group: Group) => {
-      if (this.sortParameter > 0) {
-        return group.cpu >= newGroup.cpu;
-      }
-      return group.cpu <= newGroup.cpu;
-    });
-    if (position === -1) {
-      this.sortedGroups.push(newGroup);
-    } else {
-      this.sortedGroups.splice(position, 0, newGroup);
-    }
-  }
-
-  sortByRamPush(newGroup: Group) {
-    const position = this.sortedGroups.findIndex((group: Group) => {
-      if (this.sortParameter > 0) {
-        return group.ram >= newGroup.ram;
-      }
-      return group.ram <= newGroup.ram;
-    });
-    if (position === -1) {
-      this.sortedGroups.push(newGroup);
-    } else {
-      this.sortedGroups.splice(position, 0, newGroup);
-    }
-  }
-
-  sortByDiskPush(newGroup: Group) {
-    const position = this.sortedGroups.findIndex((group: Group) => {
-      if (this.sortParameter > 0) {
-        return group.memory >= newGroup.memory;
-      }
-      return group.memory <= newGroup.memory;
-    });
-    if (position === -1) {
-      this.sortedGroups.push(newGroup);
-    } else {
-      this.sortedGroups.splice(position, 0, newGroup);
-    }
-  } */
 
   sortByIdPush(newGroup: Group) {
     const position = this.sortedGroups.findIndex((group: Group) => {
@@ -169,6 +113,19 @@ export class GroupsComponent implements OnInit {
       this.sortParameter = parameter;
       this.sortGroups();
     }
+  }
+
+  getProtocol(connections: Connection[]) {
+    if (connections.length === 0) {
+      return null;
+    }
+    const protocol = connections[0].protocol;
+    for (const connection of connections) {
+      if (connection.protocol !== protocol) {
+        return 'mixed';
+      }
+    }
+    return protocol;
   }
 
 }

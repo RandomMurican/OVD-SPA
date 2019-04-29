@@ -21,7 +21,6 @@ export class NavComponent implements OnInit {
   // The redirects if successful
   login() {
     this.authService.login(this.model);
-    this.router.navigate(['/dashboard']);
 
     // Clear login form
     this.model.username = '';

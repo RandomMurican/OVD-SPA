@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Group } from '../_models/group';
 import { AlertifyService } from '../_services/alertify.service';
 import { GroupService } from '../_services/group.service';
+import { Router } from '@angular/router';
+import { groupBy } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-users',
@@ -11,11 +13,12 @@ import { GroupService } from '../_services/group.service';
 export class EditUsersComponent implements OnInit {
   group: Group = {
     id: 0,
-    name: 'Group Name',
+    name: 'Group Name for Test',
     type: 'Orginizational',
     affinity: false,
-    total: 0,
+    max: 1,
     connections: [],
+    allUsers: true,
     users: {
       id: 1,
       users: [
@@ -25,44 +28,42 @@ export class EditUsersComponent implements OnInit {
       ]
     }
   };
-  users = '';
+  usersText = '';
   check = false;
 
-  constructor(private alertifyService: AlertifyService, private groupService: GroupService) { }
+  constructor(private alertifyService: AlertifyService, private groupService: GroupService,
+    private router: Router) { }
 
   ngOnInit() {
-    this.parseArray();
+    // Get group
+    this.check = this.group.allUsers;
+    if (!this.check) {
+      this.parseArray();
+    }
   }
 
-  update() {
-    this.users = this.users.trim();
+  changed() {
+    this.group.allUsers = this.check;
+    if (this.check) {
+      this.usersText = '';
+    } else {
+      this.parseArray();
+    }
+  }
+
+  update(onward: boolean) {
+    this.usersText = this.usersText.trim();
     this.parseTextArea();
-    if (this.group.name.length === 0) {
-      this.alertifyService.error('Name is mandatory', false);
-    } else if (!/^[\w\-\s]+$/.test(this.group.name)) {
-      this.alertifyService.error('Name can only be alphanumeric with hyphens.', false);
-    } else if (this.group.total < 0) {
-      this.alertifyService.error('Max connections cannot be negative', false);
-    } else if (this.group.total < 0) {
-      this.alertifyService.error('Total VMs cannot be negative', false);
-    } else if (this.group.total % 1 !== 0) {
-      this.alertifyService.error('Max connections is invalid', false);
-    } else if (this.group.total % 1 !== 0) {
-      this.alertifyService.error('Total VMs is invalid', false);
-    } else if (this.group.users.users.length === 0) {
-      this.alertifyService.error('No users were given', false);
-    } else if (this.parseTextArea()) {
+    if (this.parseTextArea()) {
       const name = this.group.name;
       // If connections is 0, set to null
-      this.groupService.create(this.group).subscribe((response: boolean) => {
-        if (response) {
-          this.alertifyService.success('Created group ' + name, true);
-        } else {
-          this.alertifyService.error('Failed to create group ' + name, false);
-        }
-      }, error => {
-        this.alertifyService.error('Couldn\'t connect to the service.', false);
-      });
+      // Add users to group here
+      this.alertifyService.success('Pretending like Updated users in "' + this.group.name + '"', true);
+      if (onward) {
+        this.router.navigate(['/edit/vms']);
+      } else {
+        // this.router.navigate(['/groups']);
+      }
     }
   }
 
@@ -71,7 +72,7 @@ export class EditUsersComponent implements OnInit {
   parseTextArea(): boolean {
     // Turn commas and spaces into new lines and convert into an array
     this.group.users.users = [];
-    const dawgtags = this.users.replace(/,/gi, '\n').replace(/ /gi, '\n').trim().toLowerCase().split('\n');
+    const dawgtags = this.usersText.replace(/,/gi, '\n').replace(/ /gi, '\n').trim().toLowerCase().split('\n');
     for (let index = 0; index < dawgtags.length; index++) {
       if (/^[0-9]{7}$/.test(dawgtags[index])) {
         this.addDawgtag('siu85' + dawgtags[index]);
@@ -98,9 +99,9 @@ export class EditUsersComponent implements OnInit {
   }
 
   parseArray() {
-    this.users = '';
+    this.usersText = '';
     this.group.users.users.forEach(user => {
-      this.users += user + '\n';
+      this.usersText += user + '\n';
     });
   }
 

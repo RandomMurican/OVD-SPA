@@ -1,5 +1,6 @@
 <div class="container mt-3">
   <div class="row">
+    <h4>System Load on Server</h4>
     <canvas
         baseChart
         [title]="'System Load by Server'"
@@ -10,4 +11,93 @@
         [legend]="true">
     </canvas>
   </div>
+
+  <div class="row mt-3">
+    <h4>Server Statistics</h4>
+  </div>
+  <div class="row mt-2">
+    <div class="col-md-1"></div>
+    <canvas
+      class="col-md-3"
+      baseChart
+      [chartType]="'doughnut'"
+      [datasets]="serverCpuData"
+      [labels]="usedFreeLabel"
+      [options]="diskChartOptions"
+      [legend]="false">
+    </canvas>
+    <div class="col-md-1"></div>
+    <canvas
+      class="col-md-3"
+      baseChart
+      [chartType]="'doughnut'"
+      [datasets]="serverRamData"
+      [labels]="usedFreeLabel"
+      [options]="diskChartOptions"
+      [legend]="false">
+    </canvas>
+    <div class="col-md-1"></div>
+    <canvas
+      class="col-md-3"
+      baseChart
+      [chartType]="'doughnut'"
+      [datasets]="serverDataData"
+      [labels]="usedFreeLabel"
+      [options]="diskChartOptions"
+      [legend]="false">
+    </canvas>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-1"></div>
+      <h5 class="col-md-3 text-center">CPU Assigned:<br /><strong>{{ usedCPU }}</strong> / <strong>{{ totalCPU }}</strong> Cores</h5>
+      <div class="col-md-1"></div>
+      <h5 class="col-md-3 text-center">RAM Assigned:<br /><strong>{{ usedRam }}</strong> / <strong>{{ totalRam }}</strong> GB</h5>
+      <div class="col-md-1"></div>
+      <h5 class="col-md-3 text-center">Storage Assigned:<br /><strong>{{ usedData }}</strong> / <strong>{{ totalData }}</strong> GB</h5>
+    </div>
+
+    <div class="row mt-3">
+        <h4>Server Load</h4>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-1"></div>
+        <canvas
+          class="col-md-3"
+          baseChart
+          [chartType]="'doughnut'"
+          [datasets]="loadCpuData"
+          [labels]="usedFreeLabel"
+          [options]="diskChartOptions"
+          [legend]="false">
+        </canvas>
+        <div class="col-md-1"></div>
+        <canvas
+          class="col-md-3"
+          baseChart
+          [chartType]="'doughnut'"
+          [datasets]="loadRamData"
+          [labels]="usedFreeLabel"
+          [options]="diskChartOptions"
+          [legend]="false">
+        </canvas>
+        <div class="col-md-1"></div>
+        <canvas
+          class="col-md-3"
+          baseChart
+          [chartType]="'doughnut'"
+          [datasets]="loadDataData"
+          [labels]="usedFreeLabel"
+          [options]="diskChartOptions"
+          [legend]="false">
+        </canvas>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-1"></div>
+          <h5 class="col-md-3 text-center">CPU Used:<br /><strong>{{ usedCPU }}</strong> / <strong>{{ totalCPU }}</strong> Cores</h5>
+          <div class="col-md-1"></div>
+          <h5 class="col-md-3 text-center">RAM Used:<br /><strong>{{ usedRam }}</strong> / <strong>{{ totalRam }}</strong> GB</h5>
+          <div class="col-md-1"></div>
+          <h5 class="col-md-3 text-center">Storage Used:<br /><strong>{{ usedData }}</strong> / <strong>{{ totalData }}</strong> GB</h5>
+        </div>
+
 </div>

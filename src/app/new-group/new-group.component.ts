@@ -16,9 +16,9 @@ export class NewGroupComponent implements OnInit {
     name: '',
     affinity: false,
     max: 1,
-    type: 'Orginizational',
+    type: 'Balancing',
     connections: [],
-    allUsers: true,
+    allUsers: false,
     users: {
       id: 0,
       users: []
@@ -42,17 +42,19 @@ export class NewGroupComponent implements OnInit {
       this.alertifyService.error('Name can only be alphanumeric with hyphens.', false);
     } else if (this.group.max == null || this.group.max % 1 !== 0) {
       this.alertifyService.error('Max connections is invalid', false);
-    } else if (this.group.max < 1) {
-      this.alertifyService.error('Max connections cannot be less than 1', false);
+    } else if (this.group.max < 0) {
+      this.alertifyService.error('Max connections cannot be less than 0', false);
     } else {
       this.groupService.create(this.group).subscribe((group: Group) => {
+        console.log(group);
         if (group != null) {
           this.alertifyService.success('Created group ' + name, true);
-          this.groupService.editingGroup = group.id;
           if (onwards) {
             this.router.navigate(['/edit/users']);
+            this.groupService.editingGroup = group.id;
           } else {
             this.router.navigate(['/groups']);
+            this.groupService.editingGroup = null;
           }
           return true;
         } else {

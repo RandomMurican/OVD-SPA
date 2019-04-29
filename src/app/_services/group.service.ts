@@ -8,7 +8,7 @@ import { Group } from '../_models/group';
   providedIn: 'root'
 })
 export class GroupService {
-  baseUrl = environment.apiURL + 'group';
+  baseUrl = environment.apiURL + 'group/';
   editingGroup: number;
 
   constructor(private http: HttpClient) { }
@@ -16,16 +16,20 @@ export class GroupService {
 create(model: Group): Observable<Group> {
   // Call the api to create a group returning true if it was successful
   // return this.http.post(this.baseUrl + 'create', model);
-  return this.http.post<Group>(this.baseUrl + '/creategroup', model);
+  return this.http.post<Group>(this.baseUrl + 'creategroup', model);
 }
 
-delete(id: number | string): Observable<boolean> {
+delete(id: number | string) {
   // return this.http.post(this.baseUrl + 'delete', model);
-  return this.http.delete<boolean>(this.baseUrl + '/' + id);
+  return this.http.delete<boolean>(this.baseUrl + id);
 }
 
 getGroups(): Observable<Group[]> {
-  return this.http.get<Group[]>(this.baseUrl);
+  return this.http.get<Group[]>(this.baseUrl + 'getallconnectiongroups');
+}
+
+getGroup(id: number | string): Observable<Group> {
+  return this.http.get<Group>(this.baseUrl + '');
 }
 
 }

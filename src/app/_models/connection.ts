@@ -5,4 +5,5 @@ export interface Connection {
     template: string;
     service: string;
     protocol: string;
+    hasGroup: boolean;
 }

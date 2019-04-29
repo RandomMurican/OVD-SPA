@@ -3,7 +3,6 @@ import { Group } from '../_models/group';
 import { AlertifyService } from '../_services/alertify.service';
 import { GroupService } from '../_services/group.service';
 import { Router } from '@angular/router';
-import { groupBy } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-users',
@@ -13,19 +12,15 @@ import { groupBy } from 'rxjs/operators';
 export class EditUsersComponent implements OnInit {
   group: Group = {
     id: 0,
-    name: 'Group Name for Test',
-    type: 'Orginizational',
+    name: '',
+    type: '',
     affinity: false,
     max: 1,
     connections: [],
-    allUsers: true,
+    allUsers: false,
     users: {
-      id: 1,
-      users: [
-        'SIU853656388',
-        'SIU852499440',
-        'SIU853629603'
-      ]
+      id: 0,
+      users: []
     }
   };
   usersText = '';
@@ -36,9 +31,20 @@ export class EditUsersComponent implements OnInit {
 
   ngOnInit() {
     // Get group
-    this.check = this.group.allUsers;
-    if (!this.check) {
-      this.parseArray();
+    console.log(this.groupService.editingGroup);
+    if (this.groupService.editingGroup == null) {
+      // redirect to groups
+    } else {
+      this.groupService.getGroup(this.groupService.editingGroup).subscribe((group: Group) => {
+        this.group = group;
+        this.check = this.group.allUsers;
+        if (!this.check) {
+          this.parseArray();
+        }
+      }, error => {
+        this.alertifyService.error('Failed to load group', false);
+        // redirect to groups
+      });
     }
   }
 

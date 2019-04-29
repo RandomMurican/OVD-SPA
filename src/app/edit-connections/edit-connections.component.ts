@@ -21,7 +21,8 @@ export class EditConnectionsComponent implements OnInit {
         maxConnections: 0,
         template: '',
         service: '',
-        protocol: ''
+        protocol: '',
+        hasGroup: true
       },
       {
         id: 4,
@@ -29,7 +30,8 @@ export class EditConnectionsComponent implements OnInit {
         maxConnections: 0,
         template: '',
         service: '',
-        protocol: ''
+        protocol: '',
+        hasGroup: true
       },
       {
         id: 7,
@@ -37,7 +39,8 @@ export class EditConnectionsComponent implements OnInit {
         maxConnections: 0,
         template: '',
         service: '',
-        protocol: ''
+        protocol: '',
+        hasGroup: true
       }
     ],
     allUsers: false,
@@ -57,7 +60,8 @@ export class EditConnectionsComponent implements OnInit {
       maxConnections: 0,
       template: '',
       service: '',
-      protocol: ''
+      protocol: '',
+      hasGroup: false
     },
     {
       id: 2,
@@ -65,7 +69,8 @@ export class EditConnectionsComponent implements OnInit {
       maxConnections: 0,
       template: '',
       service: '',
-      protocol: ''
+      protocol: '',
+      hasGroup: true
     },
     {
       id: 3,
@@ -73,7 +78,8 @@ export class EditConnectionsComponent implements OnInit {
       maxConnections: 0,
       template: '',
       service: '',
-      protocol: ''
+      protocol: '',
+      hasGroup: false
     },
     {
       id: 4,
@@ -81,7 +87,8 @@ export class EditConnectionsComponent implements OnInit {
       maxConnections: 0,
       template: '',
       service: '',
-      protocol: ''
+      protocol: '',
+      hasGroup: true
     },
     {
       id: 5,
@@ -89,7 +96,8 @@ export class EditConnectionsComponent implements OnInit {
       maxConnections: 0,
       template: '',
       service: '',
-      protocol: ''
+      protocol: '',
+      hasGroup: false
     },
     {
       id: 6,
@@ -97,7 +105,8 @@ export class EditConnectionsComponent implements OnInit {
       maxConnections: 0,
       template: '',
       service: '',
-      protocol: ''
+      protocol: '',
+      hasGroup: false
     },
     {
       id: 7,
@@ -105,7 +114,8 @@ export class EditConnectionsComponent implements OnInit {
       maxConnections: 0,
       template: '',
       service: '',
-      protocol: ''
+      protocol: '',
+      hasGroup: true
     },
     {
       id: 8,
@@ -113,7 +123,8 @@ export class EditConnectionsComponent implements OnInit {
       maxConnections: 0,
       template: '',
       service: '',
-      protocol: ''
+      protocol: '',
+      hasGroup: false
     }
   ];
   connectionsInGroup: number[] = [];

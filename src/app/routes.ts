@@ -14,24 +14,38 @@ import { HomeComponent } from './home/home.component';
 import { RoleGuard } from './_guards/role.guard';
 
 export const appRoutes: Routes = [
-    { path: '', component: UserComponent, canActivate: [AuthGuard] },
-    { path: 'login', component: HomeComponent },
+    // { path: '', component: UserComponent, canActivate: [AuthGuard] },
+    // { path: 'login', component: HomeComponent },
     // {
-        // path: '',
-        // runGuardsAndResolvers: 'always',
-        // canActivate: [RoleGuard],
-        // children: [
-            { path: 'dashboard', component: DashboardComponent },
-            { path: 'groups', component: GroupsComponent },
-            { path: 'sessions', component: SessionsComponent },
-            { path: 'new', component: NewGroupComponent },
-            { path: 'edit/group', component: NewGroupComponent },
-            { path: 'group/:id', component: GroupComponent },
-            { path: 'activity', component: ActivityComponent },
-            { path: 'edit/users', component: EditUsersComponent },
-            { path: 'edit/vms', component: EditConnectionsComponent },
-            { path: 'new/vm', component: NewConnectionComponent },
+    //     path: '',
+    //     runGuardsAndResolvers: 'always',
+    //     canActivate: [RoleGuard],
+    //     children: [
+    //         { path: 'dashboard', component: DashboardComponent },
+    //         { path: 'groups', component: GroupsComponent },
+    //         { path: 'sessions', component: SessionsComponent },
+    //         { path: 'edit', component: NewGroupComponent },
+    //         { path: 'edit/group', component: NewGroupComponent },
+    //         { path: 'group/:id', component: GroupComponent },
+    //         { path: 'activity', component: ActivityComponent },
+    //         { path: 'edit/users', component: EditUsersComponent },
+    //         { path: 'edit/vms', component: EditConnectionsComponent },
+    //         { path: 'new/vm', component: NewConnectionComponent }
     //     ]
     // },
+    // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
+
+    { path: '', component: UserComponent },
+    { path: 'login', component: HomeComponent },
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'groups', component: GroupsComponent },
+    { path: 'sessions', component: SessionsComponent },
+    { path: 'edit', component: NewGroupComponent },
+    { path: 'edit/group', component: NewGroupComponent },
+    { path: 'group/:id', component: GroupComponent },
+    { path: 'activity', component: ActivityComponent },
+    { path: 'edit/users', component: EditUsersComponent },
+    { path: 'edit/vms', component: EditConnectionsComponent },
+    { path: 'new/vm', component: NewConnectionComponent },
     { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
 ];

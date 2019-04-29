@@ -4,6 +4,7 @@ import { AuthService } from '../_services/auth.service';
 import { Usergroup } from '../_models/usergroup';
 import { Group } from '../_models/group';
 import { Connection } from '../_models/connection';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -40,6 +41,7 @@ export class UserComponent implements OnInit {
           template: 'yes',
           service: 'yes',
           protocol: 'ssh',
+          hasGroup: true
         }
       ],
       allUsers: true,
@@ -62,6 +64,7 @@ export class UserComponent implements OnInit {
           template: 'yes',
           service: 'yes',
           protocol: 'vnc',
+          hasGroup: true
         }
       ],
       allUsers: true,
@@ -85,6 +88,7 @@ export class UserComponent implements OnInit {
           template: 'yes',
           service: 'yes',
           protocol: 'rpd',
+          hasGroup: true
         },
         {
           id: 3,
@@ -93,6 +97,7 @@ export class UserComponent implements OnInit {
           template: 'yes',
           service: 'yes',
           protocol: 'rpdff',
+          hasGroup: true
         }
       ],
       users: {
@@ -115,6 +120,7 @@ export class UserComponent implements OnInit {
           template: 'yes',
           service: 'yes',
           protocol: 'rdp',
+          hasGroup: true
         },
         {
           id: 3,
@@ -123,6 +129,7 @@ export class UserComponent implements OnInit {
           template: 'yes',
           service: 'yes',
           protocol: 'rdp',
+          hasGroup: true
         }
       ],
       users: {
@@ -135,7 +142,7 @@ export class UserComponent implements OnInit {
    // tslint:disable-next-line:max-line-length
    link = 'data:image/png;base64,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';
    // link = 'https://image.shutterstock.com/image-vector/lettering-logo-nope-hand-sketched-260nw-1137744716.jpg'
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() { }
 
@@ -172,5 +179,16 @@ export class UserComponent implements OnInit {
         return 'https://s24255.pcdn.co/wp-content/uploads/2016/11/ssh.png';
       }
       return 'https://image.shutterstock.com/image-vector/lettering-logo-nope-hand-sketched-260nw-1137744716.jpg';
+    }
+    redir(protocol: string) {
+      switch (protocol) {
+        case 'rdp.image': {
+          window.location.href = 'http://10.100.70.230:9091/guacamole-example-1.0.0/';
+          break;
+        }
+        default: {
+          break;
+        }
+      }
     }
   }

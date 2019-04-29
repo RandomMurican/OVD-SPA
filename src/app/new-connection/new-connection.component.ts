@@ -15,7 +15,8 @@ export class NewConnectionComponent implements OnInit {
     maxConnections: 0,
     template: '',
     service: '',
-    protocol: ''
+    protocol: '',
+    hasGroup: false
   };
   protocols: string[] = [];
   templates: string[] = [];

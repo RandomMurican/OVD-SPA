@@ -3,6 +3,7 @@ import { GroupService } from '../_services/group.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { Group } from '../_models/group';
 import { Connection } from '../_models/connection';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-groups',
@@ -14,7 +15,8 @@ export class GroupsComponent implements OnInit {
   sortedGroups: Group[] = [];
   sortParameter = 0;
 
-  constructor(private groupService: GroupService, private alertifyService: AlertifyService) { }
+  constructor(private groupService: GroupService, private alertifyService: AlertifyService,
+    private router: Router) { }
 
   ngOnInit() {
     this.loadGroups();
@@ -23,6 +25,7 @@ export class GroupsComponent implements OnInit {
   loadGroups() {
     this.groupService.getGroups().subscribe((groups: Group[]) => {
       this.groups = groups;
+      console.log(groups[0].users.users);
       this.sortGroups();
     }, error => {
       this.alertifyService.error('There was an error loading the groups.', false);
@@ -48,6 +51,7 @@ export class GroupsComponent implements OnInit {
         this.sortByIdPush(group);
       }
     });
+    console.log(this.sortedGroups);
   }
 
   sortByNamePush(newGroup: Group) {
@@ -117,7 +121,7 @@ export class GroupsComponent implements OnInit {
 
   getProtocol(connections: Connection[]) {
     if (connections.length === 0) {
-      return null;
+      return '-';
     }
     const protocol = connections[0].protocol;
     for (const connection of connections) {
@@ -126,6 +130,11 @@ export class GroupsComponent implements OnInit {
       }
     }
     return protocol;
+  }
+
+  click(id: number | string) {
+    this.groupService.editingGroup = +id;
+    this.router.navigate(['/edit/users']);
   }
 
 }

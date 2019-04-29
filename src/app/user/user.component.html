@@ -1,5 +1,5 @@
 <div class="card-deck">
-    <div *ngFor="let group of groups" class="card text-left mt-3 ml-4" style="max-width: 18rem; max-height: 24rem;"> 
+    <div *ngFor="let group of groups" class="card text-left mt-3 ml-4" style="max-width: 18rem; max-height: 24rem;" (click)="redir(conType(group.connections))"> 
         <div class="card-body">
              <h1 [innerText]="conType(group.connections)" class="card-text text-center" hidden=true></h1>
             <img class="card-img-top"src="{{ link }}">

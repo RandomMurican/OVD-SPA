@@ -14,11 +14,18 @@
       <div class="col-md-1 col-sm-2 col-7 my-auto text-left">
         <span class="button" (click)="sort(0)">ID</span>
       </div>
+      <div class="col-md-2"></div>
       <div class="col-md-5 col-sm-3 col-7 my-auto text-left">
         <span class="button" (click)="sort(1)">Name</span>
       </div>
       <div class="col-md-1 d-none d-md-block col-0 my-auto text-left">
         <span class="button" (click)="sort(2)">VMs</span>
+      </div>
+      <div class="col-md-1 d-none d-md-block col-0 my-auto text-left">
+        <span class="button" (click)="sort(2)">Users</span>
+      </div>
+      <div class="col-md-1 d-none d-md-block col-0 my-auto text-left">
+        <span class="button" (click)="sort(2)">Protocol</span>
       </div>
       <div class="col-md-1 col-sm-5 col-5 my-auto text-center">
         Delete
@@ -26,14 +33,21 @@
     </div>
 
     <div class="group row py-1 bg-light" *ngFor="let group of sortedGroups">
-      <div class="col-md-1 col-sm-2 col-7 my-auto text-left" [routerLink]="['/group', group.id]">
+      <div class="col-md-1 col-sm-2 col-7 my-auto text-left" (click)="click(group.id)">
         <span class="button">{{ group.id }}</span>
       </div>
-      <div class="col-md-5 col-sm-3 col-7 my-auto" [routerLink]="['/group', group.id]">
+      <div class="col-md-2"></div>
+      <div class="col-md-5 col-sm-3 col-7 my-auto" (click)="click(group.id)">
         <span class="button">{{ group.name }}</span>
       </div>
-      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-left my-auto" [routerLink]="['/group', group.id]">
-        {{ group.total }}
+      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-left my-auto" (click)="click(group.id)">
+        {{ group.connections.length }}
+      </div>
+      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-left my-auto" (click)="click(group.id)">
+        {{ group.users.users.length }}
+      </div>
+      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-left my-auto" (click)="click(group.id)">
+        {{ getProtocol(group.connections) }}
       </div>
       <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-center my-auto">
         <span class="button text-danger" (click)="remove(group.id)">&times;</span>

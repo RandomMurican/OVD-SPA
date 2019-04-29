@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Connection } from '../_models/connection';
 import { Group } from '../_models/group';
+import { ConnectionService } from '../_services/connection.service';
+import { AlertifyService } from '../_services/alertify.service';
+import { GroupService } from '../_services/group.service';
 
 @Component({
   selector: 'app-edit-connections',
@@ -10,131 +13,43 @@ import { Group } from '../_models/group';
 export class EditConnectionsComponent implements OnInit {
   group: Group = {
     id: 0,
-    name: 'Group Name for Test',
-    type: 'Orginizational',
+    name: '',
+    type: 'Balancing',
     affinity: false,
     max: 1,
-    connections: [
-      {
-        id: 2,
-        name: 'Virtual Machine 2',
-        maxConnections: 0,
-        template: '',
-        service: '',
-        protocol: '',
-        hasGroup: true
-      },
-      {
-        id: 4,
-        name: 'Ubuntu Machine 2',
-        maxConnections: 0,
-        template: '',
-        service: '',
-        protocol: '',
-        hasGroup: true
-      },
-      {
-        id: 7,
-        name: 'Ubuntu Machine 2',
-        maxConnections: 0,
-        template: '',
-        service: '',
-        protocol: '',
-        hasGroup: true
-      }
-    ],
+    connections: [],
     allUsers: false,
     users: {
-      id: 1,
-      users: [
-        'SIU853656388',
-        'SIU852499440',
-        'SIU853629603'
-      ]
+      id: 0,
+      users: []
     }
   };
-  availableConnections: Connection[] = [
-    {
-      id: 1,
-      name: 'Virtual Machine 1',
-      maxConnections: 0,
-      template: '',
-      service: '',
-      protocol: '',
-      hasGroup: false
-    },
-    {
-      id: 2,
-      name: 'Virtual Machine 2',
-      maxConnections: 0,
-      template: '',
-      service: '',
-      protocol: '',
-      hasGroup: true
-    },
-    {
-      id: 3,
-      name: 'Ubuntu Machine 1',
-      maxConnections: 0,
-      template: '',
-      service: '',
-      protocol: '',
-      hasGroup: false
-    },
-    {
-      id: 4,
-      name: 'Ubuntu Machine 2',
-      maxConnections: 0,
-      template: '',
-      service: '',
-      protocol: '',
-      hasGroup: true
-    },
-    {
-      id: 5,
-      name: 'Ubuntu Machine 2',
-      maxConnections: 0,
-      template: '',
-      service: '',
-      protocol: '',
-      hasGroup: false
-    },
-    {
-      id: 6,
-      name: 'Ubuntu Machine 2',
-      maxConnections: 0,
-      template: '',
-      service: '',
-      protocol: '',
-      hasGroup: false
-    },
-    {
-      id: 7,
-      name: 'Ubuntu Machine 2',
-      maxConnections: 0,
-      template: '',
-      service: '',
-      protocol: '',
-      hasGroup: true
-    },
-    {
-      id: 8,
-      name: 'Ubuntu Machine 2',
-      maxConnections: 0,
-      template: '',
-      service: '',
-      protocol: '',
-      hasGroup: false
-    }
-  ];
+  availableConnections: Connection[] = [];
   connectionsInGroup: number[] = [];
 
-  constructor() { }
+  constructor(private connectionService: ConnectionService, private alertifyService: AlertifyService,
+    private groupService: GroupService) { }
 
   ngOnInit() {
-    this.group.connections.forEach(connection => {
-      this.connectionsInGroup.push(connection.id);
-    });
+    if (this.groupService.editingGroup == null) {
+      // redirect to groups
+    } else {
+      this.groupService.getGroup(this.groupService.editingGroup).subscribe((group: Group) => {
+        this.group = group;
+      }, error => {
+        this.alertifyService.error('Failed to load group', false);
+        // redirect to groups
+      });
+      this.connectionService.getConnections().subscribe((connections: Connection[]) => {
+        this.availableConnections = connections;
+        this.group.connections.forEach(connection => {
+          this.connectionsInGroup.push(connection.id);
+        });
+      }, error => {
+        this.alertifyService.error('Failed to load connections', false);
+        // redirect to groups
+      });
+    }
   }
 
   update() {

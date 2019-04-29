@@ -33,7 +33,7 @@ export class EditUsersComponent implements OnInit {
     // Get group
     console.log(this.groupService.editingGroup);
     if (this.groupService.editingGroup == null) {
-      // redirect to groups
+      this.router.navigate(['/groups']);
     } else {
       this.groupService.getGroup(this.groupService.editingGroup).subscribe((group: Group) => {
         this.group = group;
@@ -43,7 +43,7 @@ export class EditUsersComponent implements OnInit {
         }
       }, error => {
         this.alertifyService.error('Failed to load group', false);
-        // redirect to groups
+        this.router.navigate(['/groups']);
       });
     }
   }
@@ -68,7 +68,7 @@ export class EditUsersComponent implements OnInit {
       if (onward) {
         this.router.navigate(['/edit/vms']);
       } else {
-        // this.router.navigate(['/groups']);
+        this.router.navigate(['/groups']);
       }
     }
   }

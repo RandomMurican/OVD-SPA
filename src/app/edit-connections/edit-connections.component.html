@@ -1,6 +1,6 @@
 <div class="container mt-3">
   <form class="col-md-8 h-100 justify-content-center" #newGroupForm="ngForm" (ngSubmit)="update()">
-    <legend class="text-center">Edit VMs in <span name="groupName" [(ngModel)]="group">{{ group.name }}</span></legend>
+    <legend class="text-center">Edit VMs in {{ group.name }}</legend>
     <ul>
       <li>Add any existing VMs to the group or create new ones.</li>
     </ul>

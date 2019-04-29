@@ -20,18 +20,6 @@
       <div class="col-md-1 d-none d-md-block col-0 my-auto text-left">
         <span class="button" (click)="sort(2)">VMs</span>
       </div>
-      <div class="col-md-1 d-none d-md-block col-0 my-auto text-center">
-        <span class="button" (click)="sort(3)">Active</span>
-      </div>
-      <div class="col-md-1 d-none d-md-block col-0 my-auto text-center">
-        <span class="button" (click)="sort(4)">CPU</span>
-      </div>
-      <div class="col-md-1 d-none d-md-block col-0 my-auto text-center">
-        <span class="button" (click)="sort(5)">RAM</span>
-      </div>
-      <div class="col-md-1 d-none d-md-block col-0 my-auto text-center">
-        <span class="button" (click)="sort(6)">Disk</span>
-      </div>
       <div class="col-md-1 col-sm-5 col-5 my-auto text-center">
         Delete
       </div>
@@ -46,18 +34,6 @@
       </div>
       <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-left my-auto" [routerLink]="['/group', group.id]">
         {{ group.total }}
-      </div>
-      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-center my-auto" [routerLink]="['/group', group.id]">
-        {{ group.active }}
-      </div>
-      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-center my-auto" [routerLink]="['/group', group.id]">
-        {{ group.cpu }}%
-      </div>
-      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-center my-auto" [routerLink]="['/group', group.id]">
-        {{ group.ram }}%
-      </div>
-      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-center my-auto" [routerLink]="['/group', group.id]">
-        {{ group.memory }}%
       </div>
       <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-center my-auto">
         <span class="button text-danger" (click)="remove(group.id)">&times;</span>

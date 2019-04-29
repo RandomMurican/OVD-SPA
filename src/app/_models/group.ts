@@ -6,8 +6,8 @@ export interface Group {
     name: string;
     type: string;
     affinity: boolean;
-    total: number;
     max: number;
     connections: Connection[];
+    allUsers: boolean;
     users: Usergroup;
 }

@@ -3,22 +3,23 @@ import { NgModule } from '@angular/core';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { ChartsModule } from 'ng2-charts';
+import { FormsModule } from '@angular/forms';
+import { appRoutes } from './routes';
 
 import { AppComponent } from './app.component';
 import { GroupsComponent } from './groups/groups.component';
 import { NewGroupComponent } from './new-group/new-group.component';
-import { FormsModule } from '@angular/forms';
-import { appRoutes } from './routes';
 import { SessionsComponent } from './sessions/sessions.component';
 import { GroupComponent } from './group/group.component';
 import { NavComponent } from './nav/nav.component';
 import { ActivityComponent } from './activity/activity.component';
 import { UserComponent } from './user/user.component';
-import { ChartsModule } from 'ng2-charts';
 import { EditUsersComponent } from './edit-users/edit-users.component';
 import { EditConnectionsComponent } from './edit-connections/edit-connections.component';
 import { NewConnectionComponent } from './new-connection/new-connection.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
    declarations: [
@@ -33,7 +34,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
       EditUsersComponent,
       EditConnectionsComponent,
       NewConnectionComponent,
-      DashboardComponent
+      DashboardComponent,
+      HomeComponent
    ],
    imports: [
       BrowserModule,

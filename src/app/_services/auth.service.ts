@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { map } from 'rxjs/operators';
 import { AlertifyService } from '../_services/alertify.service';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,19 +13,20 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
   decodedToken: any;
 
-constructor(private http: HttpClient, private alertifyService: AlertifyService) { }
+constructor(private http: HttpClient, private alertifyService: AlertifyService, private router: Router) { }
 
 login(model: any) {
   // Call the api to log in with passed credentials
-  return this.http.post(this.baseUrl + 'login', model).subscribe((response: any) => {
+  this.http.post(this.baseUrl + 'login', model).subscribe((response: any) => {
     const user = response;
       // If there was a token, save it and decode it
       if (user) {
         localStorage.setItem('token', user.token);
         this.decodedToken = this.jwtHelper.decodeToken(user.token);
+        this.router.navigate(['/dashboard']);
       }
   }, error => {
-    this.alertifyService.error('There was an error loading the groups.', false);
+    this.alertifyService.error('There was an error contacting the server.', false);
   });
   /* .pipe(
     // Grab the token that was returned if the login was successful

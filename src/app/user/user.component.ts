@@ -53,7 +53,6 @@ export class UserComponent implements OnInit {
       name: 'This Group',
       type: 'Orginizational',
       affinity: false,
-      total: 0,
       max: 1,
       connections: [
         {
@@ -65,6 +64,7 @@ export class UserComponent implements OnInit {
           protocol: 'vnc',
         }
       ],
+      allUsers: true,
       users: {
         id: 1,
         users: []

@@ -29,7 +29,15 @@ getGroups(): Observable<Group[]> {
 }
 
 getGroup(id: number | string): Observable<Group> {
-  return this.http.get<Group>(this.baseUrl + '');
+  return this.http.get<Group>(this.baseUrl + 'getconnectiongroupinfo/' + +id);
+}
+
+updateVMs(id: number | string, added: number[], removed: number[]) {
+  return this.http.post<Boolean>(this.baseUrl + 'updateconnectionsinconnectiongroup', {id: id, addIds: added, removeIds: removed});
+}
+
+updateUsers(userGroupId: number | string, added: string[], removed: string[]) {
+  return this.http.post<Boolean>(this.baseUrl + '', {id: userGroupId, addIds: added, removeIds: removed});
 }
 
 }

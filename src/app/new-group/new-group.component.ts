@@ -29,8 +29,15 @@ export class NewGroupComponent implements OnInit {
     private cloudService: CloudService, private alertifyService: AlertifyService) { }
 
   ngOnInit() {
-    if (this.groupService.editingGroup != null) {
-      // Get group
+    if (this.groupService.editingGroup == null) {
+      // create new
+    } else {
+      this.groupService.getGroup(this.groupService.editingGroup).subscribe((group: Group) => {
+        this.group = group;
+      }, error => {
+        this.alertifyService.error('Failed to load group', false);
+        this.router.navigate(['/groups']);
+      });
     }
   }
 

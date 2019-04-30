@@ -148,7 +148,7 @@ export class UserComponent implements OnInit {
 
    conType(connections: Connection[]) {
      if (connections.length === 0) {
-       this.link = 'https://image.shutterstock.com/image-vector/lettering-logo-nope-hand-sketched-260nw-1137744716.jpg';
+       this.link = 'http://www.i2symbol.com/images/abc-123/0/empty_set_u2205_icon_256x256.png';
        return 'null';
      }
      if (connections.length === 1) {

@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { Usergroup } from '../_models/usergroup';
+import { Group } from '../_models/group';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  baseUrl = environment.apiURL + 'group';
+  baseUrl = environment.apiURL + 'group/';
 
 constructor(private http: HttpClient) { }
 
-getGroups(id: number | string): Observable<Usergroup[]> {
-  return this.http.get<Usergroup[]>(this.baseUrl);
+getGroups(id: string): Observable<Group[]> {
+  return this.http.get<Group[]>(this.baseUrl + 'getconnectiongroups/' + id);
 }
 
 }

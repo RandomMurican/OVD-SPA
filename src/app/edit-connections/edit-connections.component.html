@@ -24,9 +24,9 @@
             class="form-check-input"
             [checked]="selectedConnections.includes(connection.id)"
             (change)="change(connection.id)"
-            [ngClass]="{'disabled': disabledCheck(connection)}"
+            [disabled]="disabledCheck(connection)"
           />
-          <label for="vm-{{ connection.id }}">{{ connection.id }}: {{ connection.name }}</label>
+          <label for="vm-{{ connection.id }}" [ngClass]="{'text-secondary': disabledCheck(connection)}">{{ connection.id }}: {{ connection.name }}</label>
         </div>
       </div>
     </div>

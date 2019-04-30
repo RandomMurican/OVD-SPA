@@ -3,7 +3,7 @@ import { GroupService } from '../_services/group.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { Group } from '../_models/group';
 import { Connection } from '../_models/connection';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-groups',
@@ -13,14 +13,14 @@ import { Router } from '@angular/router';
 export class GroupsComponent implements OnInit {
   groups: Group[] = [];
   sortedGroups: Group[] = [];
+  editingGroup = 0;
   sortParameter = 0;
 
   constructor(private groupService: GroupService, private alertifyService: AlertifyService,
-    private router: Router) { }
+    private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.loadGroups();
-    this.groupService.editingGroup = null;
   }
 
   loadGroups() {
@@ -29,7 +29,6 @@ export class GroupsComponent implements OnInit {
       this.sortGroups();
     }, error => {
       this.alertifyService.error('There was an error loading the groups.', false);
-      this.groupService.editingGroup = null;
       this.router.navigate(['/groups']);
     });
   }
@@ -135,7 +134,6 @@ export class GroupsComponent implements OnInit {
   }
 
   click(id: number | string) {
-    this.groupService.editingGroup = +id;
     this.router.navigate(['/group/' + id]);
   }
 

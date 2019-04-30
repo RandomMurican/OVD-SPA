@@ -5,7 +5,7 @@
 </div> 
 -->
 <div class="container mt-4">
-  <button type="button" class="btn btn-success btn-md ml-auto" [routerLink]="['/edit/group']">Create</button>
+  <button type="button" class="btn btn-success btn-md ml-auto" [routerLink]="['/edit/group/0']">Create</button>
 </div>
 
 <div class="container h-100 mt-2">
@@ -33,17 +33,17 @@
     </div>
 
     <div class="group row py-1 bg-light" *ngFor="let group of sortedGroups">
-      <div class="col-md-1 col-sm-2 col-7 my-auto text-left" (click)="click(group.id)">
+      <div class="col-md-1 col-sm-2 col-7 my-auto text-left" [routerLink]="['/edit/group/' + group.id]">
         <span class="button">{{ group.id }}</span>
       </div>
       <div class="col-md-2"></div>
       <div class="col-md-5 col-sm-3 col-7 my-auto" (click)="click(group.id)">
         <span class="button">{{ group.name }}</span>
       </div>
-      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-left my-auto" (click)="click(group.id)">
+      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-left my-auto" [routerLink]="['/edit/vms/' + group.id]">
         {{ group.connections.length }}
       </div>
-      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-left my-auto" (click)="click(group.id)">
+      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-left my-auto" [routerLink]="['/edit/users/' + group.id]">
         {{ group.users.users.length }}
       </div>
       <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-left my-auto" (click)="click(group.id)">

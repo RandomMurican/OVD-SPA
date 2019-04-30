@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupService } from '../_services/group.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CloudService } from '../_services/cloud.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { Group } from '../_models/group';
@@ -26,14 +26,21 @@ export class NewGroupComponent implements OnInit {
   };
 
   constructor(public groupService: GroupService, private router: Router,
-    private cloudService: CloudService, private alertifyService: AlertifyService) { }
+    private cloudService: CloudService, private alertifyService: AlertifyService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    if (this.groupService.editingGroup == null) {
+    this.group.id = +this.route.snapshot.paramMap.get('id');
+    if (this.group.id === 0) {
       // create new
     } else {
-      this.groupService.getGroup(this.groupService.editingGroup).subscribe((group: Group) => {
-        this.group = group;
+      this.groupService.getGroup(this.group.id).subscribe((group: Group) => {
+        if (group != null) {
+          this.group = group;
+        } else {
+          this.alertifyService.error('Failed to load group', false);
+          this.router.navigate(['/groups']);
+        }
       }, error => {
         this.alertifyService.error('Failed to load group', false);
         this.router.navigate(['/groups']);
@@ -57,11 +64,9 @@ export class NewGroupComponent implements OnInit {
         if (group != null) {
           this.alertifyService.success('Created group ' + name, true);
           if (onwards) {
-            this.router.navigate(['/edit/users']);
-            this.groupService.editingGroup = group.id;
+            this.router.navigate(['/edit/users/' + this.group.id]);
           } else {
             this.router.navigate(['/groups']);
-            this.groupService.editingGroup = null;
           }
           return true;
         } else {

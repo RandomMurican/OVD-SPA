@@ -9,7 +9,6 @@ import { Group } from '../_models/group';
 })
 export class GroupService {
   baseUrl = environment.apiURL + 'group/';
-  editingGroup: number;
 
   constructor(private http: HttpClient) { }
 

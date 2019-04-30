@@ -4,7 +4,7 @@ import { Group } from '../_models/group';
 import { ConnectionService } from '../_services/connection.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { GroupService } from '../_services/group.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit-connections',
@@ -29,28 +29,32 @@ export class EditConnectionsComponent implements OnInit {
   selectedConnections: number[] = [];
 
   constructor(private connectionService: ConnectionService, private alertifyService: AlertifyService,
-    private groupService: GroupService, private router: Router) { }
+    private groupService: GroupService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    if (this.groupService.editingGroup == null) {
+    this.group.id = +this.route.snapshot.paramMap.get('id');
+    if (this.group.id === 0) {
       this.router.navigate(['/groups']);
     } else {
-      this.groupService.getGroup(this.groupService.editingGroup).subscribe((group: Group) => {
-        this.group = group;
-        this.connectionService.getConnections().subscribe((connections: Connection[]) => {
-          this.availableConnections = connections;
-          this.group.connections.forEach(connection => {
-            this.selectedConnections.push(connection.id);
+      this.groupService.getGroup(this.group.id).subscribe((group: Group) => {
+        if (group != null && group.id > 0) {
+          this.group = group;
+          this.connectionService.getConnections().subscribe((connections: Connection[]) => {
+            this.availableConnections = connections;
+            this.group.connections.forEach(connection => {
+              this.selectedConnections.push(connection.id);
+            });
+          }, error => {
+            this.alertifyService.error('Failed to load connections', false);
+            this.router.navigate(['/group/' + this.group.id]);
           });
-        }, error => {
-          this.alertifyService.error('Failed to load connections', false);
-          this.router.navigate(['/group/' + this.groupService.editingGroup]);
-          this.groupService.editingGroup = null;
-        });
+        } else {
+          this.alertifyService.error('Failed to load group', false);
+          this.router.navigate(['/groups']);
+        }
       }, error => {
         this.alertifyService.error('Failed to load group', false);
         this.router.navigate(['/groups']);
-        this.groupService.editingGroup = null;
       });
     }
   }
@@ -61,7 +65,6 @@ export class EditConnectionsComponent implements OnInit {
     } else {
       this.selectedConnections.push(+id);
     }
-    console.log(this.selectedConnections);
   }
 
   update() {
@@ -101,10 +104,8 @@ export class EditConnectionsComponent implements OnInit {
 
   disabledCheck(connection: Connection) {
     if (this.selectedConnections.includes(connection.id)) {
-      console.log('Already in group');
       return false;
     }
-    console.log('Returning ' + connection.hasGroup);
     return connection.hasGroup;
   }
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Group } from '../_models/group';
 import { AlertifyService } from '../_services/alertify.service';
 import { GroupService } from '../_services/group.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit-users',
@@ -28,19 +28,26 @@ export class EditUsersComponent implements OnInit {
   check = false;
 
   constructor(private alertifyService: AlertifyService, private groupService: GroupService,
-    private router: Router) { }
+    private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     // Get group
-    if (this.groupService.editingGroup == null) {
+    this.group.id = +this.route.snapshot.paramMap.get('id');
+    if (this.group.id === 0) {
       this.alertifyService.error('Pick a group first', false);
       this.router.navigate(['/groups']);
     } else {
-      this.groupService.getGroup(this.groupService.editingGroup).subscribe((group: Group) => {
-        this.group = group;
-        this.check = this.group.allUsers;
-        if (!this.check) {
-          this.parseArray();
+      this.groupService.getGroup(this.group.id).subscribe((group: Group) => {
+        if (group != null && group.id > 0) {
+          console.log(group);
+          this.group = group;
+          this.check = this.group.allUsers;
+          if (!this.check) {
+            this.parseArray();
+          }
+        } else {
+          this.alertifyService.error('Failed to load group data', false);
+          this.router.navigate(['/groups']);
         }
       }, error => {
         this.alertifyService.error('Failed to connect to server', false);
@@ -76,9 +83,9 @@ export class EditUsersComponent implements OnInit {
       });
       this.groupService.updateUsers(this.group.id, added, deleted).subscribe((response: boolean) => {
         if (response) {
-          this.alertifyService.success('Updated the group users', false);
+          this.alertifyService.success('Updated "' + this.group.name + '\'s" users', true);
           if (onward) {
-            this.router.navigate(['/edit/vms']);
+            this.router.navigate(['/edit/vms/' + this.group.id]);
           } else {
             this.router.navigate(['/groups']);
           }
@@ -90,8 +97,6 @@ export class EditUsersComponent implements OnInit {
       });
     }
   }
-
-  clearForm() { }
 
   parseTextArea(): boolean {
     // Turn commas and spaces into new lines and convert into an array

@@ -25,10 +25,11 @@ export class GroupsComponent implements OnInit {
   loadGroups() {
     this.groupService.getGroups().subscribe((groups: Group[]) => {
       this.groups = groups;
-      console.log(groups[0].users.users);
       this.sortGroups();
     }, error => {
       this.alertifyService.error('There was an error loading the groups.', false);
+      this.groupService.editingGroup = null;
+      this.router.navigate(['/groups']);
     });
   }
 
@@ -134,7 +135,7 @@ export class GroupsComponent implements OnInit {
 
   click(id: number | string) {
     this.groupService.editingGroup = +id;
-    this.router.navigate(['/edit/vms']);
+    this.router.navigate(['/group/' + id]);
   }
 
 }

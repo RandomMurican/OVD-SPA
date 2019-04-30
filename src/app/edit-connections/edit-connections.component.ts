@@ -25,7 +25,7 @@ export class EditConnectionsComponent implements OnInit {
     }
   };
   availableConnections: Connection[] = [];
-  connectionsInGroup: number[] = [];
+  selectedConnections: number[] = [];
 
   constructor(private connectionService: ConnectionService, private alertifyService: AlertifyService,
     private groupService: GroupService) { }
@@ -36,24 +36,76 @@ export class EditConnectionsComponent implements OnInit {
     } else {
       this.groupService.getGroup(this.groupService.editingGroup).subscribe((group: Group) => {
         this.group = group;
-      }, error => {
-        this.alertifyService.error('Failed to load group', false);
-        // redirect to groups
-      });
-      this.connectionService.getConnections().subscribe((connections: Connection[]) => {
-        this.availableConnections = connections;
-        this.group.connections.forEach(connection => {
-          this.connectionsInGroup.push(connection.id);
+        this.connectionService.getConnections().subscribe((connections: Connection[]) => {
+          console.log(connections);
+          this.availableConnections = connections;
+          this.group.connections.forEach(connection => {
+            this.selectedConnections.push(connection.id);
+          });
+        }, error => {
+          this.alertifyService.error('Failed to load connections', false);
+          // redirect to groups
         });
       }, error => {
-        this.alertifyService.error('Failed to load connections', false);
+        this.alertifyService.error('Failed to load group', false);
         // redirect to groups
       });
     }
   }
 
-  update() {
+  change(id: number | string) {
+    if (this.selectedConnections.includes(+id)) {
+      this.selectedConnections.splice(this.selectedConnections.indexOf(+id), 1);
+    } else {
+      this.selectedConnections.push(+id);
+    }
+    console.log(this.selectedConnections);
+  }
 
+  update() {
+    // tslint:disable-next-line:prefer-const
+    let connectionsRemoved = [];
+    this.group.connections.forEach(connection => {
+      if (!this.selectedConnections.includes(connection.id)) {
+        connectionsRemoved.push(connection.id);
+      }
+    });
+    // tslint:disable-next-line:prefer-const
+    let connectionsAdded = [];
+    this.selectedConnections.forEach(connection => {
+      let contains = false;
+      for (const conn of this.group.connections) {
+        if (conn.id === connection) {
+          contains = true;
+          break;
+        }
+      }
+      if (!contains) {
+        connectionsAdded.push(connection);
+      }
+    });
+    console.log(connectionsAdded);
+    console.log(connectionsRemoved);
+
+    this.groupService.updateVMs(this.group.id, connectionsAdded, connectionsRemoved).subscribe((response: boolean) => {
+      if (response) {
+        this.alertifyService.success('Updated the group VMs', false);
+      } else {
+        this.alertifyService.error('Failed to update group VMs', false);
+      }
+    }, error => {
+      this.alertifyService.error('Failed to load group', false);
+      // this.router.navigate(['/groups']);
+    });
+  }
+
+  disabledCheck(connection: Connection) {
+    if (this.selectedConnections.includes(connection.id)) {
+      console.log('Already in group');
+      return false;
+    }
+    console.log('Returning ' + connection.hasGroup);
+    return connection.hasGroup;
   }
 
 }

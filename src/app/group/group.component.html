@@ -1,13 +1,7 @@
-<div class="container mt-3" *ngFor="let element of group">
-  <h2>Group {{ element.id }}: {{ element.name }}</h2>
-  <h5>Hostspares: </h5><span>{{ element.hotspares }}</span>
-  <h5>Template: </h5><span>{{ element.template }}</span>
-  <h5>Service: </h5><span>{{ element.serviceoffering }}</span>
-  <h5>Protocol: </h5><span>{{ element.protocol }}</span>
-  <h5>Total: </h5><span>{{ element.total }}</span>
-  <h5>Active: </h5><span>{{ element.active }}</span>
+<div class="container mt-3" *ngFor="let group of groups">
+  <h2>Group {{ group.id }}: {{ group.name }}</h2>
   <h5>Users: </h5>
   <ul>
-    <li *ngFor="let user of element.dawgtags">{{ user }}</li>
+    <li *ngFor="let user of group.users.users">{{ user }}</li>
   </ul>
 </div>

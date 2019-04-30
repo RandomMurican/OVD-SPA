@@ -23,6 +23,7 @@ export class EditUsersComponent implements OnInit {
       users: []
     }
   };
+  parsedUsers: string[] = [];
   usersText = '';
   check = false;
 
@@ -58,18 +59,35 @@ export class EditUsersComponent implements OnInit {
   }
 
   update(onward: boolean) {
-    this.usersText = this.usersText.trim();
-    this.parseTextArea();
     if (this.parseTextArea()) {
-      const name = this.group.name;
-      // If connections is 0, set to null
-      // Add users to group here
-      this.alertifyService.success('Pretending like Updated users in "' + this.group.name + '"', true);
-      if (onward) {
-        this.router.navigate(['/edit/vms']);
-      } else {
-        this.router.navigate(['/groups']);
-      }
+      // tslint:disable-next-line:prefer-const
+      let deleted: string[] = [];
+      this.group.users.users.forEach(user => {
+        if (!this.parsedUsers.includes(user)) {
+          deleted.push(user);
+        }
+      });
+      // tslint:disable-next-line:prefer-const
+      let added: string[] = [];
+      this.parsedUsers.forEach(user => {
+        if (!this.group.users.users.includes(user)) {
+          deleted.push(user);
+        }
+      });
+      this.groupService.updateUsers(this.group.users.id, added, deleted).subscribe((response: boolean) => {
+        if (response) {
+          this.alertifyService.success('Updated the group users', false);
+          if (onward) {
+            this.router.navigate(['/edit/vms']);
+          } else {
+            this.router.navigate(['/groups']);
+          }
+        } else {
+          this.alertifyService.error('Failed to update group users', false);
+        }
+      }, error => {
+        this.alertifyService.error('Failed to connect to server', false);
+      });
     }
   }
 
@@ -77,7 +95,7 @@ export class EditUsersComponent implements OnInit {
 
   parseTextArea(): boolean {
     // Turn commas and spaces into new lines and convert into an array
-    this.group.users.users = [];
+    this.parsedUsers = [];
     const dawgtags = this.usersText.replace(/,/gi, '\n').replace(/ /gi, '\n').trim().toLowerCase().split('\n');
     for (let index = 0; index < dawgtags.length; index++) {
       if (/^[0-9]{7}$/.test(dawgtags[index])) {
@@ -97,10 +115,10 @@ export class EditUsersComponent implements OnInit {
   }
 
   addDawgtag(dawgtag: string) {
-    if (this.group.users.users.includes(dawgtag)) {
+    if (this.parsedUsers.includes(dawgtag)) {
       this.alertifyService.error(dawgtag + ' was repeated. Duplicate skipped.', false);
     } else {
-      this.group.users.users.push(dawgtag);
+      this.parsedUsers.push(dawgtag);
     }
   }
 

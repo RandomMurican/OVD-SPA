@@ -10,7 +10,7 @@ import { GroupService } from '../_services/group.service';
   styleUrls: ['./group.component.css']
 })
 export class GroupComponent implements OnInit {
-  group: Group[] = [];
+  groups: Group[] = [];
 
   constructor(private route: ActivatedRoute, private groupService: GroupService) { }
 
@@ -24,7 +24,7 @@ export class GroupComponent implements OnInit {
       const index = groups.findIndex((group: Group) => {
         return group.id === +id;
       });
-      this.group.push(groups[index]);
+      this.groups.push(groups[index]);
     }, error => {
       console.log('ERROR: ' + error);
     });

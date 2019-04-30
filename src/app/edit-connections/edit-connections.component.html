@@ -22,7 +22,9 @@
             type="checkbox"
             name="vm-{{ connection.id }}"
             class="form-check-input"
-            [checked]="connectionsInGroup.includes(connection.id)"
+            [checked]="selectedConnections.includes(connection.id)"
+            (change)="change(connection.id)"
+            [ngClass]="{'disabled': disabledCheck(connection)}"
           />
           <label for="vm-{{ connection.id }}">{{ connection.id }}: {{ connection.name }}</label>
         </div>

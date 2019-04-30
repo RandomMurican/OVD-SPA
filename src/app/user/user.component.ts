@@ -153,18 +153,18 @@ export class UserComponent implements OnInit {
      }
      if (connections.length === 1) {
         this.link = this.getImagePath(connections[0].protocol);
-       return connections[0].protocol + '.image';
+       return connections[0].protocol;
      }
      const previousProtocol = connections[0].protocol;
      // tslint:disable-next-line:prefer-const
      for (let connection of connections) {
       if (connection.protocol !== previousProtocol) {
         this.link = 'http://artmixedup.com/wp-content/uploads/2016/10/word_mixed.png';
-        return 'mixed.image';
+        return 'mixed';
       }
      }
      this.link = this.getImagePath(previousProtocol);
-     return previousProtocol + '.image';
+     return previousProtocol;
      }
     getImagePath(con: string) {
       if (con === 'rdp') {
@@ -181,14 +181,6 @@ export class UserComponent implements OnInit {
       return 'https://image.shutterstock.com/image-vector/lettering-logo-nope-hand-sketched-260nw-1137744716.jpg';
     }
     redir(protocol: string) {
-      switch (protocol) {
-        case 'rdp.image': {
-          window.location.href = 'http://10.100.70.230:9091/guacamole-example-1.0.0/';
-          break;
-        }
-        default: {
-          break;
-        }
-      }
+      this.router.navigate(['/vm/' + protocol]);
     }
   }

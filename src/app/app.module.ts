@@ -20,6 +20,7 @@ import { EditConnectionsComponent } from './edit-connections/edit-connections.co
 import { NewConnectionComponent } from './new-connection/new-connection.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
+import { VmComponent } from './vm/vm.component';
 
 @NgModule({
    declarations: [
@@ -35,7 +36,8 @@ import { HomeComponent } from './home/home.component';
       EditConnectionsComponent,
       NewConnectionComponent,
       DashboardComponent,
-      HomeComponent
+      HomeComponent,
+      VmComponent
    ],
    imports: [
       BrowserModule,

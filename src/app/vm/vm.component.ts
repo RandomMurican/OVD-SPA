@@ -23,7 +23,8 @@ setLink(protocol: string) {
   switch (protocol) {
     case 'rdp': {
       console.log('rdp');
-      document.getElementById('frame').url = 'http://10.100.70.230:9091/guacamole-example-1.0.0/';
+      // document.getElementById('frame').url = 'http://10.100.70.230:9091/guacamole-example-1.0.0/';
+      break;
     }
     default: {
       console.log('other');

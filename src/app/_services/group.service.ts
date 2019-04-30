@@ -21,7 +21,7 @@ create(model: Group): Observable<Group> {
 
 delete(id: number | string) {
   // return this.http.post(this.baseUrl + 'delete', model);
-  return this.http.delete<boolean>(this.baseUrl + id);
+  return this.http.post<boolean>(this.baseUrl + 'deletegroup/' + id, null);
 }
 
 getGroups(): Observable<Group[]> {
@@ -29,7 +29,7 @@ getGroups(): Observable<Group[]> {
 }
 
 getGroup(id: number | string): Observable<Group> {
-  return this.http.get<Group>(this.baseUrl + 'getconnectiongroupinfo/' + +id);
+  return this.http.get<Group>(this.baseUrl + 'getconnectiongroupinfo/' + id);
 }
 
 updateVMs(id: number | string, added: number[], removed: number[]) {

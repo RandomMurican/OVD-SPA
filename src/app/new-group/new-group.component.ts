@@ -69,13 +69,6 @@ export class NewGroupComponent implements OnInit {
         }
       }, error => {
         this.alertifyService.error('Couldn\'t connect to the service.', false);
-        this.alertifyService.error('REMOVE THIS DUMMY!!!', false);
-        if (onwards) {
-          this.router.navigate(['/edit/users']);
-        } else {
-          this.router.navigate(['/groups']);
-        }
-        return true;
       });
     }
     return false;

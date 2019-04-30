@@ -20,6 +20,7 @@ export class GroupsComponent implements OnInit {
 
   ngOnInit() {
     this.loadGroups();
+    this.groupService.editingGroup = null;
   }
 
   loadGroups() {
@@ -98,7 +99,7 @@ export class GroupsComponent implements OnInit {
     this.groupService.delete(id).subscribe((response: boolean) => {
       if (response) {
         this.alertifyService.success('Deleted group id:' + id, true);
-        this.sortGroups();
+        this.loadGroups();
       } else {
         this.alertifyService.error('Failed to delete group id:' + id, false);
       }

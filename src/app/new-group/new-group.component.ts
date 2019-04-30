@@ -64,7 +64,7 @@ export class NewGroupComponent implements OnInit {
         if (group != null) {
           this.alertifyService.success('Created group ' + name, true);
           if (onwards) {
-            this.router.navigate(['/edit/users/' + this.group.id]);
+            this.router.navigate(['/edit/users/' + group.id]);
           } else {
             this.router.navigate(['/groups']);
           }

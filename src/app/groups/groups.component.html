@@ -24,7 +24,7 @@
       <div class="col-md-1 d-none d-md-block col-0 my-auto text-left">
         <span class="button" (click)="sort(2)">Users</span>
       </div>
-      <div class="col-md-1 d-none d-md-block col-0 my-auto text-left">
+      <div class="col-md-1 d-none d-md-block col-0 my-auto text-center">
         <span class="button" (click)="sort(2)">Protocol</span>
       </div>
       <div class="col-md-1 col-sm-5 col-5 my-auto text-center">
@@ -46,7 +46,7 @@
       <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-left my-auto" [routerLink]="['/edit/users/' + group.id]">
         {{ group.users.users.length }}
       </div>
-      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-left my-auto" (click)="click(group.id)">
+      <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-left my-auto text-center" (click)="click(group.id)">
         {{ getProtocol(group.connections) }}
       </div>
       <div class="col-md-1 col-sm-4 d-none d-sm-block col-0 text-center my-auto">

@@ -32,8 +32,8 @@ export class EditUsersComponent implements OnInit {
 
   ngOnInit() {
     // Get group
-    console.log(this.groupService.editingGroup);
     if (this.groupService.editingGroup == null) {
+      this.alertifyService.error('Pick a group first', false);
       this.router.navigate(['/groups']);
     } else {
       this.groupService.getGroup(this.groupService.editingGroup).subscribe((group: Group) => {
@@ -43,7 +43,7 @@ export class EditUsersComponent implements OnInit {
           this.parseArray();
         }
       }, error => {
-        this.alertifyService.error('Failed to load group', false);
+        this.alertifyService.error('Failed to connect to server', false);
         this.router.navigate(['/groups']);
       });
     }
@@ -71,10 +71,10 @@ export class EditUsersComponent implements OnInit {
       let added: string[] = [];
       this.parsedUsers.forEach(user => {
         if (!this.group.users.users.includes(user)) {
-          deleted.push(user);
+          added.push(user);
         }
       });
-      this.groupService.updateUsers(this.group.users.id, added, deleted).subscribe((response: boolean) => {
+      this.groupService.updateUsers(this.group.id, added, deleted).subscribe((response: boolean) => {
         if (response) {
           this.alertifyService.success('Updated the group users', false);
           if (onward) {

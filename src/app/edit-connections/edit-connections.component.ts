@@ -14,7 +14,7 @@ export class EditConnectionsComponent implements OnInit {
   group: Group = {
     id: 0,
     name: '',
-    type: 'Balancing',
+    type: '',
     affinity: false,
     max: 1,
     connections: [],

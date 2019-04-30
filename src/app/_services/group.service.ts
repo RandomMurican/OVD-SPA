@@ -37,7 +37,7 @@ updateVMs(id: number | string, added: number[], removed: number[]) {
 }
 
 updateUsers(userGroupId: number | string, added: string[], removed: string[]) {
-  return this.http.post<Boolean>(this.baseUrl + '', {id: userGroupId, addIds: added, removeIds: removed});
+  return this.http.post<Boolean>(this.baseUrl + 'updateusers', {id: userGroupId, addIds: added, removeIds: removed});
 }
 
 }

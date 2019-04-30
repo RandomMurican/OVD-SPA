@@ -59,11 +59,13 @@ export class EditConnectionsComponent implements OnInit {
     }
   }
 
-  change(id: number | string) {
-    if (this.selectedConnections.includes(+id)) {
-      this.selectedConnections.splice(this.selectedConnections.indexOf(+id), 1);
+  change(connection: Connection) {
+    if (this.selectedConnections.includes(connection.id)) {
+      this.selectedConnections.splice(this.selectedConnections.indexOf(connection.id), 1);
+      connection.hasGroup = false;
     } else {
-      this.selectedConnections.push(+id);
+      this.selectedConnections.push(connection.id);
+      connection.hasGroup = true;
     }
   }
 
@@ -104,6 +106,19 @@ export class EditConnectionsComponent implements OnInit {
 
   disabledCheck(connection: Connection) {
     if (this.selectedConnections.includes(connection.id)) {
+      return false;
+    }
+    if (this.selectedConnections.length !== 0) {
+      for (let i = 0; i < this.availableConnections.length; i++) {
+        if (this.availableConnections[i].id === this.selectedConnections[0]) {
+          // tslint:disable-next-line:triple-equals
+          if (this.availableConnections[i].protocol == connection.protocol) {
+            return connection.hasGroup;
+          } else {
+            return true;
+          }
+        }
+      }
       return false;
     }
     return connection.hasGroup;

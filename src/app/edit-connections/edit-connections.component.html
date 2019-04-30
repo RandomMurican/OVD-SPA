@@ -14,7 +14,7 @@
       >Create</button>
     </div>
 
-    <div class="row pl-2 pt-2 mb-3" style="height:30em;overflow-y:scroll">
+    <div class="row p-2 mt-2 mb-3 border" style="height:30em;overflow-y:scroll">
       <div class="container">
         <div class="row col-md-12 mb-2" *ngFor="let connection of availableConnections">
           <input
@@ -23,7 +23,7 @@
             name="vm-{{ connection.id }}"
             class="form-check-input"
             [checked]="selectedConnections.includes(connection.id)"
-            (change)="change(connection.id)"
+            (change)="change(connection)"
             [disabled]="disabledCheck(connection)"
           />
           <label for="vm-{{ connection.id }}" [ngClass]="{'text-secondary': disabledCheck(connection)}">{{ connection.id }}: {{ connection.name }}</label>

@@ -12,6 +12,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { RoleGuard } from './_guards/role.guard';
+import { VmComponent } from './vm/vm.component';
 
 export const appRoutes: Routes = [
     // { path: '', component: UserComponent, canActivate: [AuthGuard] },
@@ -36,6 +37,7 @@ export const appRoutes: Routes = [
     // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
 
     { path: '', component: UserComponent },
+    { path: 'vm', component: VmComponent },
     { path: 'login', component: HomeComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'groups', component: GroupsComponent },

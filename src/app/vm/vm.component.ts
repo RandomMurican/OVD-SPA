@@ -1,33 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-vm',
   templateUrl: './vm.component.html',
   styleUrls: ['./vm.component.css']
 })
-export class VmComponent implements OnInit {
-  link = '';
 
+export class VmComponent implements OnInit {
+  protocol = '';
+  url: SafeResourceUrl;
   loadTime = new Date().toLocaleTimeString();
-  constructor(private route: ActivatedRoute, private domService: DomSanitizer) { }
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.link = this.setLink(this.route.snapshot.paramMap.get('id'));
     this.setFocus();
   // window.addEventListener('load', initTime());
   }
 
-setLink(protocol: string) {
-  switch (protocol) {
+setLink() {
+  this.protocol = this.route.snapshot.paramMap.get('id');
+  switch (this.protocol) {
     case 'rdp': {
       console.log('rdp');
-      document.getElementById('frame').url = 'http://10.100.70.230:9091/guacamole-example-1.0.0/';
+      return this.sanitizer.bypassSecurityTrustResourceUrl('http://10.100.70.230:9091/guacamole-example-1.0.0/');
     }
     default: {
       console.log('other');
-      return 'https://i.ytimg.com/vi/ne2tliU4C2k/maxresdefault.jpg';
+      return this.sanitizer.bypassSecurityTrustResourceUrl('https://i.ytimg.com/vi/ne2tliU4C2k/maxresdefault.jpg');
     }
   }
 }
